@@ -1,12 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Test from './test/test';
+import Test from './components/test';
+import Header from './components/header/Header';
+import Login from './components/auth/LoginPage'
+import { BrowserRouter , Route , Switch } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <Test></Test>
+      <BrowserRouter>
+              <Header/>
+            <Switch >
+              <Route exact path = "/" component={()=><Test />} />
+              <Route exact path = "/login" component={()=><Login />} />
+          </Switch>
+      </BrowserRouter>
     </div>
   );
 }

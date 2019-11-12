@@ -1,0 +1,23 @@
+.login {
+    width: 350px;
+    margin: auto;
+    margin-top: 5%;
+    text-align: center;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    padding:10px;
+}
+#button{
+    margin: 10%;
+}
+.textField{
+    width: 80%;
+}
+
+.progress{
+    size: 3px;
+}
