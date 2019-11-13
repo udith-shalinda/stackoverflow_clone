@@ -76,6 +76,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
+
+
+
+
 export function Header(props) {
 
 
@@ -106,7 +111,7 @@ export function Header(props) {
   }
 
   const logginButtonHandler=()=>{ 
-    if(props.userId == null){
+    if(props.userState.userId != null){
       return (
         <div>
           <Grid container>
@@ -178,7 +183,7 @@ export function Header(props) {
 
 const mapStateToProps = state => {
   return { 
-    userId: state.userId,
+    userState: state.userId,
     colorState:state.colorState,
   };
 };

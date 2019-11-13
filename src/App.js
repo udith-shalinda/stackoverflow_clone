@@ -17,7 +17,7 @@ store.subscribe(() => console.log(store.getState()))
 function App() {
   return (
     <Provider store={store}> 
-      <div className="App">
+      <div className="App" >
         <BrowserRouter>
                 <Header/>
               <Switch >

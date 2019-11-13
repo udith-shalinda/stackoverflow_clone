@@ -12,10 +12,9 @@ import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import './Login.css';
 
-// //redux
-// import { connect } from 'react-redux'
-// import { setUser ,setLoginState} from '../redux/actions'
-
+//redux
+import { connect } from 'react-redux'
+import { setUserId,setUserToken } from '../../redux/actions/UserLogin';
 
 
 
@@ -30,6 +29,12 @@ export function SignUp(props){
       });
       const [isloading,setloading] = useState('No');
       // const [errorMsg,setErrorMsg] = useState('sfsfsf');
+      let colors = props.colorState.colors[props.colorState.colorCount];
+
+
+
+
+
     
       const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value });
@@ -53,7 +58,7 @@ export function SignUp(props){
                 size={26}
                 thickness={4}
                 {...props}
-                color={props.fontColor}
+                color={colors.theamFontColor}
               />
             )
           case "Correct":
@@ -78,7 +83,7 @@ export function SignUp(props){
             status:values.status,
             profilePictureLink:null
         }
-        const userDetailsRes = await axios.post('https://blooming-reaches-61913.herokuapp.com/user/api/userDetails/save',userDetailsData);
+        const userDetailsRes = await axios.post('http://localhost:8102/api/userDetails/save',userDetailsData);
         console.log(userDetailsRes.data);
     
         const userData = {
@@ -86,11 +91,11 @@ export function SignUp(props){
             password:values.password,
             userDetailsId:userDetailsRes.data
         }
-        const res = await axios.post('https://blooming-reaches-61913.herokuapp.com/user/api/saveUser',userData);
+        const res = await axios.post('http://localhost:8102/api/user/save',userData);
         console.log(res.data);
         if(res.status === 200){
-          props.setUser(userDetailsData.data);
-          props.setLoginState(true);
+          props.setUserId(res.data.userDetailsId);
+          props.setUserToken(res.data.token);
           setValues({
               ...values,
               redirect:true
@@ -102,7 +107,6 @@ export function SignUp(props){
     }
     const redirectHandler = () =>{
         if(values.redirect){
-          props.setLogged()
           return(
             <Redirect to='/' /> 
           );
@@ -114,7 +118,7 @@ export function SignUp(props){
 
     return (
         <div className="login">
-            <Card style={{color:props.fontColor, backgroundColor:props.backgroundColor}}>
+            <Card style={{color:colors.theamFontColor, backgroundColor:colors.contentBackgroundColor}}>
                 <div className="card">
                     <h2>Sign Up</h2>
                     <form>
@@ -128,16 +132,16 @@ export function SignUp(props){
                             className="textField"
                             onChange={handleChange('name')}
                             style={{
-                                backgroundColor: props.backgroundColor,
+                                backgroundColor: colors.contentBackgroundColor,
                                 }}
                                 InputProps={{
                                     style: {
-                                        color: props.fontColor
+                                        color: colors.theamFontColor
                                     }
                                 }}
                                 InputLabelProps={{
                                   style:{
-                                    color:props.fontColor,
+                                    color:colors.theamFontColor,
                                   }
                                 }}
                         />
@@ -152,16 +156,16 @@ export function SignUp(props){
                             className="textField"
                             onChange={handleChange('email')}
                             style={{
-                                backgroundColor: props.backgroundColor,
+                                backgroundColor: colors.contentBackgroundColor,
                                 }}
                                 InputProps={{
                                     style: {
-                                        color: props.fontColor
+                                        color: colors.theamFontColor
                                     }
                                 }}
                                 InputLabelProps={{
                                   style:{
-                                    color:props.fontColor,
+                                    color:colors.theamFontColor,
                                   }
                                 }}
                         />
@@ -175,16 +179,16 @@ export function SignUp(props){
                             className="textField"
                             onChange={handleChange('status')}
                             style={{
-                                backgroundColor: props.backgroundColor,
+                                backgroundColor: colors.contentBackgroundColor,
                                 }}
                                 InputProps={{
                                     style: {
-                                        color: props.fontColor
+                                        color: colors.theamFontColor
                                     }
                                 }}
                                 InputLabelProps={{
                                   style:{
-                                    color:props.fontColor,
+                                    color:colors.theamFontColor,
                                   }
                                 }}
                         />
@@ -209,18 +213,21 @@ export function SignUp(props){
                                     </IconButton>
                                     </InputAdornment>
                                 ),
+                                style: {
+                                  color: colors.theamFontColor
+                                  }
                                 }}
                                 style={{
-                                    backgroundColor: props.backgroundColor,
+                                    backgroundColor: colors.contentBackgroundColor,
                                     }}
                                 InputLabelProps={{
                                     style:{
-                                        color:props.fontColor,
+                                        color:colors.theamFontColor,
                                       }
                                 }}
                             />
                         <Button  variant="contained" id="button" onClick={signUpHandler} 
-                        style={{color:props.fontColor, backgroundColor:props.backgroundColor}}>{signUpButton()}</Button>
+                        style={{color:colors.theamFontColor, backgroundColor:colors.contentBackgroundColor}}>{signUpButton()}</Button>
                     </form>
                 </div>
             </Card>
@@ -231,13 +238,16 @@ export function SignUp(props){
 
 
 
-// const mapStateToProps = state => {
-//     return { userId: state.userId };
-//   };
-  
-//   export default connect(
-//     mapStateToProps,
-//     { setUser ,setLoginState}
-//   )(SignUp)
+const mapStateToProps = state => {
+  return { 
+    userId: state.userId,
+    colorState:state.colorState,
+   };
+};
 
-export default SignUp;
+export default connect(
+  mapStateToProps,
+  { setUserId,setUserToken }
+)(SignUp)
+
+// export default SignUp;

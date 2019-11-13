@@ -13,10 +13,9 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import './Login.css'
 
-// //redux
-// import { connect } from 'react-redux'
-// import { setUser,setLoginState } from '../redux/actions'
-
+//redux
+import { connect } from 'react-redux'
+import { setUserId,setUserToken } from '../../redux/actions/UserLogin';
 
 
 export function Login(props){
@@ -27,7 +26,9 @@ export function Login(props){
         redirect: false
       });
       const [isloading,setloading] = useState('No');
-      const [errorMsg,setErrorMsg] = useState(' ');
+      const [errorEmail,setErrorEmail] = useState(false);
+      const [errorPassword,setErrorPassword] = useState(false);
+      let colors = props.colorState.colors[props.colorState.colorCount];
 
     
       const handleChange = prop => event => {
@@ -44,28 +45,37 @@ export function Login(props){
       
     
     const loginHandler =  async ()=>{
+      setErrorEmail(false);
+      setErrorPassword(false);
       setloading('Yes')
         const userData = {
           email:values.email,
           password:values.password
         }
-        const res = await axios.post('https://localhost:8102/api/user/login',userData);
-        console.log(res);  
-        if(res.status === 200){
-          setloading('Correct');
-          props.setUser(res.data);
-          props.setLoginState(true);
-            setValues({
-              ...values,
-              redirect:true
-            });
-          }else if(res.status === 203){
-            setloading("Wrong")
-            setErrorMsg("Password is wrong")
-          }else {
-            setloading("Wrong")
-            setErrorMsg("Email is wrong")
-          }
+        try{
+          const res = await axios.post('http://localhost:8102/api/user/login',userData);
+          console.log(res.data.userDetailsId);  
+          if(res.status === 200){
+            setloading('Correct');
+            props.setUserId(res.data.userDetailsId);
+            props.setUserToken(res.data.token)
+              setValues({
+                ...values,
+                redirect:true
+              });
+            }else if(res.status === 203){
+              setloading("No")
+              setErrorPassword(true)
+            }else {
+              setloading("No")
+              setErrorEmail(true);
+            }
+        }catch(e){
+          console.log(e);
+          setloading("No")
+         setErrorEmail(true);
+        }
+        
     }
     const redirectHandler = () =>{
       if(values.redirect){
@@ -104,13 +114,15 @@ export function Login(props){
       }
     }
     
+    
     return (
-        <div className="login" >
-            <Card style={{color:props.fontColor, backgroundColor:props.backgroundColor}}>
+        <div className="login">
+            <Card style={{color:colors.theamFontColor, backgroundColor:colors.contentBackgroundColor}}>
                 <div className="card">
                     <h2>Login</h2>
                     <form>
                         <TextField
+                            error={errorEmail}
                             id="outlined-email-input"
                             label="Email"
                             type="email"
@@ -118,24 +130,26 @@ export function Login(props){
                             autoComplete="email"
                             margin="normal"
                             variant="outlined"
+                            helperText="Incorrect entry."
                             value={values.email}
                             onChange={handleChange('email')}
                             className="textField"
                             style={{
-                                backgroundColor: props.backgroundColor,
+                                // backgroundColor: colors.contentBackgroundColor,
                                 }}
                                 InputProps={{
                                     style: {
-                                        color: props.fontColor
+                                        color: colors.theamFontColor
                                     }
                                 }}
                                 InputLabelProps={{
                                   style:{
-                                    color:props.fontColor,
+                                    color:colors.theamFontColor,
                                   }
                                 }}
                         />
                         <TextField
+                            error={errorPassword}
                             id="outlined-adornment-password"
                             variant="outlined"
                             type={values.showPassword ? 'text' : 'password'}
@@ -151,46 +165,48 @@ export function Login(props){
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
                                     onMouseDown={handleMouseDownPassword}
-                                    style={{color:props.fontColor}}
+                                    style={{color:colors.theamFontColor}}
                                   >
                                     {values.showPassword ? <VisibilityOff /> : <Visibility />}
                                   </IconButton>
                                 </InputAdornment>
                               ),
                               style: {
-                                color: props.fontColor
+                                color: colors.theamFontColor
                                 }
                             }}
                             style={{
-                                backgroundColor: props.backgroundColor,
+                                backgroundColor: colors.contentBackgroundColor,
                                 }}
                             InputLabelProps={{
                                 style:{
-                                    color:props.fontColor,
+                                    color:colors.theamFontColor,
                                   }
                             }}
                         />
                         <Button variant="contained" id="button" onClick={()=>loginHandler()} 
-                        style={{color:props.fontColor, backgroundColor:props.backgroundColor}}
+                        style={{color:colors.theamFontColor, backgroundColor:colors.contentBackgroundColor}}
                         >{LoginButton()}</Button>
                     </form>
                 </div>
             </Card>
             {redirectHandler()}
-            {errorMsg}
         </div>
     );
 }
 
  
 
-// const mapStateToProps = state => {
-//   return { userId: state.userId };
-// };
+const mapStateToProps = state => {
+  return { 
+    userId: state.userId,
+    colorState:state.colorState,
+   };
+};
 
-// export default connect(
-//   mapStateToProps,
-//   { setUser,setLoginState }
-// )(Login)
+export default connect(
+  mapStateToProps,
+  { setUserId,setUserToken }
+)(Login)
 
-export default Login;
+// export default Login;
