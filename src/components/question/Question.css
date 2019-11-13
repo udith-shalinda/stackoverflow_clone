@@ -10,6 +10,18 @@
     display:flex;
 }
 .votes{
-    width:25px;
     text-align: center;
+}
+.profilePart{
+    display: flex;
+}
+.avatar{
+    /* background: red; */
+    width: 50px; 
+    margin-top: 20px;
+}
+.profileDetails{
+    text-align: center;
+    /* background: blue; */
+
 }

@@ -5,6 +5,8 @@ const Home =()=>{
     return(
         <div>
             <QuestionPreview/>
+            <br></br>
+            <QuestionPreview/>
         </div>
     );
 }

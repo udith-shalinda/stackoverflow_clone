@@ -1,7 +1,9 @@
 import React from 'react'
 import { Card } from '@material-ui/core'
+import Avatar from '@material-ui/core/Avatar';
 
 import './Question.css'
+import QuestionProfileDetails from './QuestionProfileDetails';
 
 const QuestionPreview =()=>{
     return(
@@ -21,6 +23,7 @@ const QuestionPreview =()=>{
                     <div className="content">
                         <h2>sfsfsfsfs sfsfsfsfs ssfsfsfsfsf</h2>
                         <p>sfsf ssgllllllll sflsjslojsojso jsojfjsojf sojsojso jfsojfsofjsofjs o</p>
+                        <QuestionProfileDetails/>
                     </div>
                 </div>
             </Card>
