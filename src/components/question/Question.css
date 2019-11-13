@@ -1,0 +1,15 @@
+.card{
+    width: 80%;
+    text-align: left;
+}
+.content{
+    display: inline-block;
+    flex-grow: 1;
+}
+.question{
+    display:flex;
+}
+.votes{
+    width:25px;
+    text-align: center;
+}

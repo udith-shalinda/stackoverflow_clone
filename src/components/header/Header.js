@@ -151,7 +151,7 @@ export function Header(props) {
       <AppBar position="static"  style={{ backgroundColor:colors.theamColor}} color="primary">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            <Link to="/" className={classes.link}>
+            <Link to="/home" className={classes.link}>
               Stackoverflow
             </Link>
           </Typography>
