@@ -1,8 +1,8 @@
-const userId = (state = {text:''},action)=>{
+const userId = (state = {userId:null},action)=>{
     switch(action.type){
-        case 'SET_USER':
+        case 'SET_USER_ID':
             return{
-                text:action.text
+                userId:action.id
             }   
         default:
             return state;

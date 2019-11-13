@@ -133,7 +133,7 @@ export function Header(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static"  style={{ backgroundColor:props.color}}>
+      <AppBar position="static"  style={{ backgroundColor:props.color}} color="primary">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/" className={classes.link}>
@@ -169,13 +169,12 @@ export function Header(props) {
 // const mapStateToProps = state => {
 //   return { 
 //     userId: state.userId,
-//     loginState:state.loginState
 //   };
 // };
 
 // export default connect(
 //   mapStateToProps,
-//   { setUser,setLoginState }
+//   { setUser}
 // )(Header)
 
 export default Header;
