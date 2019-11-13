@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card } from '@material-ui/core'
-import Avatar from '@material-ui/core/Avatar';
 
 import './Question.css'
 import QuestionProfileDetails from './QuestionProfileDetails';

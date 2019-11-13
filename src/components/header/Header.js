@@ -117,7 +117,7 @@ export function Header(props) {
           <Grid container>
             <Grid item>
               <IconButton>
-                <Link to="/postBlog" className={classes.link}>
+                <Link to="/addQuestion" className={classes.link}>
                   <AddBoxIcon />
                 </Link>
               </IconButton>
