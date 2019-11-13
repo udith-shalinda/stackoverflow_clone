@@ -12,10 +12,10 @@ import {Link} from 'react-router-dom';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import {Redirect} from 'react-router'
 
-// //redux
-// import { connect } from 'react-redux'
-// import { setUser,setLoginState } from '../redux/actions'
-// import {changeTheamColor} from '../redux/actions/color'
+//redux
+import { connect } from 'react-redux'
+import { setUserId,setUserToken } from '../../redux/actions/UserLogin';
+import {changeTheamColor} from '../../redux/actions/color';
 
 
 
@@ -77,9 +77,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function Header(props) {
+
+
   const classes = useStyles();
   const [isSearching,setIsSearch] = useState(false);
   const [searchInput,setSearchInput] = useState('');
+  let colors = props.colorState.colors[props.colorState.colorCount];
+
+
+
+
 
   const search=prop =>  event =>{
     setIsSearch(true);
@@ -94,9 +101,12 @@ export function Header(props) {
       return null;
     }
   }
+  const handleTheame = ()=>{
+    props.changeTheamColor((props.colorState.colorCount+1)%2);
+  }
 
   const logginButtonHandler=()=>{ 
-    if(false){
+    if(props.userId == null){
       return (
         <div>
           <Grid container>
@@ -121,11 +131,11 @@ export function Header(props) {
       return(<div>
         <Link to="/login" className={classes.link}>
           <Button variant="contained"  
-                        style={{color:'white', backgroundColor:"black"}}>Login</Button>
+                        style={{color:'white', backgroundColor:colors.theamColor}} color="primary">Login</Button>
           </Link>
           <Link to="/signUp" className={classes.link}>
             <Button  variant="contained"
-                        style={{color:'white', backgroundColor:"black"}}>Sign up</Button>
+                         style={{color:'white', backgroundColor:colors.theamColor}}  color="primary">Sign up</Button>
           </Link>
       </div>)
     }
@@ -133,7 +143,7 @@ export function Header(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static"  style={{ backgroundColor:props.color}} color="primary">
+      <AppBar position="static"  style={{ backgroundColor:colors.theamColor}} color="primary">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/" className={classes.link}>
@@ -155,7 +165,7 @@ export function Header(props) {
             />
           </div>
           <IconButton>
-            <InvertColorsIcon style={{ color:"white" }} onClick={props.onChangeTheam}/>
+            <InvertColorsIcon style={{ color:"white" }} onClick={handleTheame}/>
           </IconButton>
           {logginButtonHandler()}
           {searchHandler()}
@@ -166,15 +176,16 @@ export function Header(props) {
 }
 
 
-// const mapStateToProps = state => {
-//   return { 
-//     userId: state.userId,
-//   };
-// };
+const mapStateToProps = state => {
+  return { 
+    userId: state.userId,
+    colorState:state.colorState,
+  };
+};
 
-// export default connect(
-//   mapStateToProps,
-//   { setUser}
-// )(Header)
+export default connect(
+  mapStateToProps,
+  { setUserId,setUserToken,changeTheamColor}
+)(Header)
 
-export default Header;
+// export default Header;
