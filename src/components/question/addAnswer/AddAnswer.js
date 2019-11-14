@@ -20,6 +20,10 @@ const AddAnswer = (props)=>{
     const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
     };
+
+    const addQuestionHandler = ()=>{
+        // if
+    }
     
 
     return(
@@ -74,7 +78,9 @@ const AddAnswer = (props)=>{
                         }}
                     />
                     <Button  variant="contained" id="button" 
-                    style={{color:colors.theamFontColor, backgroundColor:colors.bodyBackgroundColor}}>Add Answer</Button>
+                        style={{color:colors.theamFontColor, backgroundColor:colors.bodyBackgroundColor}}
+                        onClick={addQuestionHandler}
+                    >Add Answer</Button>
                 </form>
             </Card>
         </div>
@@ -83,7 +89,8 @@ const AddAnswer = (props)=>{
 
 const mapStateToProps = state => {
     return { 
-      userId: state.userId,
+      userId: state.userId.userId,
+      toket:state.userToken.token,
       colorState:state.colorState,
      };
   };

@@ -130,7 +130,6 @@ export function Login(props){
                             autoComplete="email"
                             margin="normal"
                             variant="outlined"
-                            helperText="Incorrect entry."
                             value={values.email}
                             onChange={handleChange('email')}
                             className="textField"

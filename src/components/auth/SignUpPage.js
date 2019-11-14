@@ -23,12 +23,12 @@ export function SignUp(props){
         password: '',
         email:'',
         name:'',
-        status:'',
+        confirmPassword:'',
         showPassword: false,
         redirect:false
       });
       const [isloading,setloading] = useState('No');
-      // const [errorMsg,setErrorMsg] = useState('sfsfsf');
+      const [difPassword,setDifPassword] = useState(false);
       let colors = props.colorState.colors[props.colorState.colorCount];
 
 
@@ -77,38 +77,42 @@ export function SignUp(props){
       }
 
     const signUpHandler = async (e)=>{
-      setloading('Yes')
-        const userDetailsData ={
-            name:values.name,
-            status:values.status,
-            profilePictureLink:null
-        }
-        const userDetailsRes = await axios.post('http://localhost:8102/api/userDetails/save',userDetailsData);
-        console.log(userDetailsRes.data);
-    
-        const userData = {
-            email:values.email,
-            password:values.password,
-            userDetailsId:userDetailsRes.data
-        }
-        const res = await axios.post('http://localhost:8102/api/user/save',userData);
-        console.log(res.data);
-        if(res.status === 200){
-          props.setUserId(res.data.userDetailsId);
-          props.setUserToken(res.data.token);
-          setValues({
-              ...values,
-              redirect:true
-          })
-          setloading('Correct')
-        }else{
-          setloading('Worng')
-        }
+      if(values.confirmPassword === values.password){
+        setloading('Yes')
+          const userDetailsData ={
+              name:values.name,
+              votes:0,
+              profilePictureLink:null
+          }
+          const userDetailsRes = await axios.post('http://localhost:8102/api/userDetails/save',userDetailsData);
+          console.log(userDetailsRes.data);
+      
+          const userData = {
+              email:values.email,
+              password:values.password,
+              userDetailsId:userDetailsRes.data
+          }
+          const res = await axios.post('http://localhost:8102/api/user/save',userData);
+          console.log(res.data);
+          if(res.status === 200){
+            props.setUserId(res.data.userDetailsId);
+            props.setUserToken(res.data.token);
+            setValues({
+                ...values,
+                redirect:true
+            })
+            setloading('Correct')
+          }else{
+            setloading('Worng')
+          }
+      }else{
+        setDifPassword(true);
+      }
     }
     const redirectHandler = () =>{
         if(values.redirect){
           return(
-            <Redirect to='/' /> 
+            <Redirect to='/home' /> 
           );
         }else{
           return null;
@@ -170,35 +174,49 @@ export function SignUp(props){
                                 }}
                         />
                         <TextField
-                            id="outlined-email-input3"
-                            label="Status"
-                            type="text"
-                            name="status"
-                            margin="normal"
-                            variant="outlined"
-                            className="textField"
-                            onChange={handleChange('status')}
-                            style={{
-                                backgroundColor: colors.contentBackgroundColor,
-                                }}
-                                InputProps={{
-                                    style: {
-                                        color: colors.theamFontColor
-                                    }
-                                }}
-                                InputLabelProps={{
-                                  style:{
-                                    color:colors.theamFontColor,
-                                  }
-                                }}
-                        />
-                        <TextField
                                 id="outlined-adornment-password"
+                                error={difPassword}
                                 variant="outlined"
                                 type={values.showPassword ? 'text' : 'password'}
                                 label="Password"
                                 value={values.password}
                                 onChange={handleChange('password')}
+                                className="textField"
+                                InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                    <IconButton
+                                        edge="end"
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                    </InputAdornment>
+                                ),
+                                style: {
+                                  color: colors.theamFontColor
+                                  }
+                                }}
+                                style={{
+                                    backgroundColor: colors.contentBackgroundColor,
+                                    }}
+                                InputLabelProps={{
+                                    style:{
+                                        color:colors.theamFontColor,
+                                      }
+                                }}
+                            />
+                            
+                        <TextField
+                                error={difPassword}
+                                id="outlined-adornment-password-confirm"
+                                variant="outlined"
+                                type={values.showPassword ? 'text' : 'password'}
+                                label="confirm-Password"
+                                value={values.confirmPassword}
+                                onChange={handleChange('confirmPassword')}
                                 className="textField"
                                 InputProps={{
                                 endAdornment: (
