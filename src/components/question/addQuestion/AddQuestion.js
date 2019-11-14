@@ -39,7 +39,7 @@ const AddQuestion =(props)=>{
     return(
         <div className="bd">
             <Card style={{color: colors.theamFontColor,backgroundColor:colors.contentBackgroundColor}} className="inputCard">
-                <h2>Add Question</h2>
+                <h2 className="addQuestion">Add Question</h2>
             <form>
                 <TextField
                     id="outlined-email-input"

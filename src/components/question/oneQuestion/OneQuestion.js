@@ -1,22 +1,25 @@
 import React from 'react'
-import { Card } from '@material-ui/core'
+import { Card, IconButton } from '@material-ui/core';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import QuestionProfileDetails from '../QuestionProfileDetails';
 
-import './Question.css'
-import QuestionProfileDetails from './QuestionProfileDetails';
+import '../Question.css'
 
-const QuestionPreview =()=>{
+const OneQuestion =()=>{
     return(
         <div>
             <Card className="questionCard">
                 <div className="question">
                     <div className="content votes">
                         <div >
+                            <IconButton>
+                                <ThumbUpIcon></ThumbUpIcon>
+                            </IconButton>
                             <p>0</p>
-                            <p>votes</p>
-                        </div>
-                        <div>
-                            <p>0</p>
-                            <p>answers</p>
+                            <IconButton>
+                                <ThumbDownIcon></ThumbDownIcon>
+                            </IconButton>
                         </div>
                     </div>
                     <div className="content">
@@ -30,4 +33,4 @@ const QuestionPreview =()=>{
     );
 }
 
-export default QuestionPreview;
+export default OneQuestion;

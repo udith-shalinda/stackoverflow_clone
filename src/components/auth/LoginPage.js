@@ -135,7 +135,7 @@ export function Login(props){
                             onChange={handleChange('email')}
                             className="textField"
                             style={{
-                                // backgroundColor: colors.contentBackgroundColor,
+                                backgroundColor: colors.contentBackgroundColor,
                                 }}
                                 InputProps={{
                                     style: {

@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import configureStore from './redux/store'
 import Home from './components/home/Home';
 import AddQuestion from './components/question/addQuestion/AddQuestion';
+import OneQuestion from './components/question/oneQuestion/OneQuestion';
 // import {setUser,setLoginState} from './redux/actions'
 const store = configureStore;
 console.log(store.getState())
@@ -28,6 +29,7 @@ function App() {
                 <Route exact path = "/signup" component={()=><SignUp />} />
                 <Route exact path = "/home" component={()=><Home />} />
                 <Route exact path = "/addQuestion" component={()=><AddQuestion />} />
+                <Route exact path = "/oneQuestion" component={()=><OneQuestion />} />
             </Switch>
         </BrowserRouter>
       </div>

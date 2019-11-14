@@ -1,6 +1,7 @@
-.card{
+.questionCard{
     width: 80%;
     text-align: left;
+    margin: auto;
 }
 .content{
     display: inline-block;
