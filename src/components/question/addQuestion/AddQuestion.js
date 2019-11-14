@@ -28,7 +28,7 @@ const AddQuestion =(props)=>{
     const redirectHandler = ()=>{
         if(values.redirect){
             return(
-              <Redirect to='/' /> 
+              <Redirect to='/login' /> 
             );
           }else{
             return null;

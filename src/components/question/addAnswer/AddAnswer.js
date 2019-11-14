@@ -1,15 +1,15 @@
 import React from 'react'
 import { Card, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import {Redirect} from 'react-router'
 
+import './AddAnswer.css'
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../../redux/actions/UserLogin';
 
 
 
-const AddAnswer = ()=>{
+const AddAnswer = (props)=>{
     const [values, setValues] = React.useState({
         answer:'',
         description:'',
@@ -21,21 +21,11 @@ const AddAnswer = ()=>{
     setValues({ ...values, [prop]: event.target.value });
     };
     
-    const redirectHandler = ()=>{
-        if(values.redirect){
-            return(
-              <Redirect to='/' /> 
-            );
-          }else{
-            return null;
-          }
-    }
-    
 
     return(
-        <div className="bd">
-            <Card style={{color: colors.theamFontColor,backgroundColor:colors.contentBackgroundColor}} className="inputCard">
-                <h2 className="addQuestion">Add Question</h2>
+        <div className="addAnswerCard">
+            <Card style={{color: colors.theamFontColor,backgroundColor:colors.contentBackgroundColor}} >
+                <h2 className="addAnswer">Add Question</h2>
             <form>
                 <TextField
                     id="outlined-email-input"
@@ -87,7 +77,6 @@ const AddAnswer = ()=>{
                     style={{color:colors.theamFontColor, backgroundColor:colors.bodyBackgroundColor}}>Add Answer</Button>
                 </form>
             </Card>
-            {redirectHandler()}
         </div>
     );
 }

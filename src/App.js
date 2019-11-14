@@ -3,7 +3,7 @@ import './App.css';
 import Test from './components/test';
 import Header from './components/header/Header';
 import Login from './components/auth/LoginPage'
-import { BrowserRouter , Route , Switch } from 'react-router-dom';
+import { BrowserRouter , Route , Switch ,Redirect} from 'react-router-dom';
 import SignUp from './components/auth/SignUpPage';
 
 import { Provider } from "react-redux";
@@ -17,6 +17,15 @@ console.log(store.getState())
 store.subscribe(() => console.log(store.getState()))
 // store.dispatch(setLoginState(true))
 
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    store.getState().userId.userId !== null
+      ? <Component {...props} />
+      : <Redirect to='/login' />
+  )} />
+)
+
 function App() {
   return (
     <Provider store={store}> 
@@ -28,8 +37,8 @@ function App() {
                 <Route exact path = "/login" component={()=><Login />} />
                 <Route exact path = "/signup" component={()=><SignUp />} />
                 <Route exact path = "/home" component={()=><Home />} />
-                <Route exact path = "/addQuestion" component={()=><AddQuestion />} />
                 <Route exact path = "/oneQuestion" component={()=><OneQuestion />} />
+                <PrivateRoute path='/addQuestion' component={AddQuestion} />
             </Switch>
         </BrowserRouter>
       </div>

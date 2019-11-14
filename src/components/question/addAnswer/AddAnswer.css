@@ -1,0 +1,11 @@
+.addAnswerCard{
+    width: 80%;
+    margin: auto;
+    margin-top: 5%;
+    text-align: center;
+}
+
+.addAnswer{
+    padding: 2%;
+    text-align: center;
+}

@@ -1,15 +1,28 @@
-import React from 'react'
-import { Card } from '@material-ui/core';
+import React, { useState } from 'react'
+import { Card, Button } from '@material-ui/core';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
+import OneAnswer from './OneAnswer';
+import AddAnswer from '../addAnswer/AddAnswer'
 
 
 import '../Question.css'
-import OneAnswer from './OneAnswer';
 
-const OneQuestion =()=>{
+const OneQuestion =(props)=>{
+    const [addAnswerState,setAnswerState] = useState(false);
 
-    
+
+    const addAnswerHandler = ()=>{
+        if(addAnswerState){
+            return(
+               <AddAnswer/> 
+            )
+        }else{
+            return(
+                <Button onClick={()=>{setAnswerState(true)}}>Add Answer</Button>
+            )
+        }
+    }
 
     return(
         <div>
@@ -25,6 +38,7 @@ const OneQuestion =()=>{
                         <OneAnswer></OneAnswer>
                         <br/>
                         <OneAnswer></OneAnswer>
+                        {addAnswerHandler()}
                     </div>
                 </div>
             </Card>
