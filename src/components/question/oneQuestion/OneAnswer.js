@@ -1,16 +1,10 @@
-import React from 'react'
-import { Card } from '@material-ui/core';
+import React from 'react';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
+import { Card } from '@material-ui/core';
 
 
-import '../Question.css'
-import OneAnswer from './OneAnswer';
-
-const OneQuestion =()=>{
-
-    
-
+const OneAnswer = ()=>{
     return(
         <div>
             <Card className="questionCard">
@@ -22,9 +16,6 @@ const OneQuestion =()=>{
                         <h2>sfsfsfsfs sfsfsfsfs ssfsfsfsfsf</h2>
                         <p>sfsf ssgllllllll sflsjslojsojso jsojfjsojf sojsojso jfsojfsofjsofjs o</p>
                         <QuestionProfileDetails/>
-                        <OneAnswer></OneAnswer>
-                        <br/>
-                        <OneAnswer></OneAnswer>
                     </div>
                 </div>
             </Card>
@@ -32,4 +23,4 @@ const OneQuestion =()=>{
     );
 }
 
-export default OneQuestion;
+export default OneAnswer;
