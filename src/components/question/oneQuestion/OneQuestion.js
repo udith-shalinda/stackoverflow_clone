@@ -21,7 +21,7 @@ const OneQuestion =(props)=>{
 
     useEffect(()=>{
         getOneQuestion();
-    },[]);
+    },[])
 
 
     const getOneQuestion = async ()=>{
@@ -42,22 +42,81 @@ const OneQuestion =(props)=>{
     const addAnswerHandler = ()=>{
         if(addAnswerState){
             return(
-               <AddAnswer/> 
+               <AddAnswer questionId={OneQuestion.id}/> 
             )
         }else{
             return(
-                // <Button onClick={()=>{setAnswerState(true)}}>Add Answer</Button>
-                <Button onClick={()=>{testRedirect()}}>Add test redirect</Button>
-                
+                <Button onClick={()=>{setAnswerState(true)}}>Add Answer</Button>
             )
         }
     }
 
-    const testRedirect=()=>{
-        props.history.push('/login')
-        // props.browserHistory.push()
+    // const testRedirect=()=>{
+    //     props.history.push('/login')
+    // }
+    const doQuestionUpvote=async ()=>{
+        console.log("upvote clicked");
+        let config = {
+            headers: {
+                "Authorization":"Bearer " + props.token,
+            }
+        }
+        const voter ={
+            userId:props.userId
+        }
+        try{
+            const res = await Axios.put('http://localhost:8102/api/question/addUpVoter/'+id,voter,config);
+            console.log(res.data);  
+            // setOneQuestion(res.data);
+        }catch(e){
+            console.log(e);
+        }
+    } 
+    const doQuestionDownvote=async ()=>{
+        console.log("downvote clicked");
+        let config = {
+            headers: {
+                "Authorization":"Bearer " + props.token,
+            }
+        }
+        const voter ={
+            userId:props.userId
+        }
+        try{
+            const res = await Axios.put('http://localhost:8102/api/question/addDownVoter/'+id,voter,config);
+            console.log(res.data);  
+            // setOneQuestion(res.data);
+        }catch(e){
+            console.log(e);
+        }
     }
 
+    const showAnswers = ()=>{
+        if(OneQuestion.answerList !== null){
+            if(OneQuestion.answerList.length >0){
+                return OneQuestion.answerList.map((answer)=>{
+                    return(
+                        <div>
+                            <OneAnswer
+                                id={answer.id} 
+                                answer={answer.answer}
+                                description={answer.description}
+                                answerVotes = {answer.answerVoters}
+                                createrName={answer.createrDetails.name}
+                                createrVotes ={answer.createrDetails.votes}
+                                createrProfileLink={answer.createrDetails.profilePictureLink}
+                            ></OneAnswer>
+                            <br/>
+                        </div>
+                    )
+                });
+            }
+        }else{
+            return(
+                <p>No answers is posted!!</p>
+            )
+        }
+    }
 
 
     const showQuestion=()=>{
@@ -68,7 +127,8 @@ const OneQuestion =(props)=>{
                     <div className="content votes">
                         <Votes 
                             votes={OneQuestion.voters}
-
+                            upVote={doQuestionUpvote}
+                            downVote={doQuestionDownvote}
                         />
                     </div>
                     <div className="content">
@@ -78,9 +138,8 @@ const OneQuestion =(props)=>{
                             name={OneQuestion.createrDetails.name} 
                             votes={OneQuestion.createrDetails.votes} 
                             profileLink={OneQuestion.createrDetails.profileLink}/>
-                        <OneAnswer></OneAnswer>
-                        <br/>
-                        <OneAnswer></OneAnswer>
+                        
+                        {showAnswers()}
                         {addAnswerHandler()}
                     </div>
                 </div>
@@ -119,5 +178,3 @@ const mapStateToProps = state => {
     mapStateToProps,
     { setUserId }
   )(withRouter(OneQuestion))
-
-// export default OneQuestion;

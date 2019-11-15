@@ -83,7 +83,7 @@ export function Login(props){
     const redirectHandler = () =>{
 
       if(values.redirect){
-        if(lastLocation.pathname != null){
+        if(lastLocation !== null){
           return(
             <Redirect to={lastLocation.pathname} /> 
           );

@@ -6,6 +6,7 @@ import './AddAnswer.css'
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../../redux/actions/UserLogin';
+import Axios from 'axios';
 
 
 
@@ -21,15 +22,41 @@ const AddAnswer = (props)=>{
     setValues({ ...values, [prop]: event.target.value });
     };
 
-    const addAnswerHandler=()=>{
-        
+    const addAnswerHandler=async()=>{
+        let config = {
+            headers: {
+                "Authorization":"Bearer " + props.token,
+            }
+        }
+        const answerData = {
+            answer:values.answer,
+            description:values.description,
+            createrId:props.userId,
+        }
+        let answerId='';
+        try{
+            const res = await Axios.post('http://localhost:8102/api/answer/save',answerData,config);
+            console.log(res.data);  
+            answerId = res.data;
+        }catch(e){
+            console.log(e);
+        }
+        const answerIdData={
+            answerId:answerId
+        }
+        try{
+            const resTwo = await Axios.put('http://localhost:8102/api/question/addAnswer/'+props.questionId,answerIdData,config);
+            console.log(resTwo.data);  
+        }catch(e){
+            console.log(e);
+        }
     }
     
 
     return(
         <div className="addAnswerCard">
             <Card style={{color: colors.theamFontColor,backgroundColor:colors.contentBackgroundColor}} >
-                <h2 className="addAnswer">Add Question</h2>
+                <h2 className="addAnswer">Add Answer</h2>
             <form>
                 <TextField
                     id="outlined-email-input"
@@ -90,7 +117,7 @@ const AddAnswer = (props)=>{
 const mapStateToProps = state => {
     return { 
       userId: state.userId.userId,
-      toket:state.userToken.token,
+      token:state.userToken.token,
       colorState:state.colorState,
      };
   };

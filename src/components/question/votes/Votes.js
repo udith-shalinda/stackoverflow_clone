@@ -6,11 +6,11 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 const Votes=(props)=>{
     return(
         <div >
-            <IconButton>
+            <IconButton onClick={props.upVote}>
                 <ThumbUpIcon></ThumbUpIcon>
             </IconButton>
             <p>{props.votes}</p>
-            <IconButton>
+            <IconButton onClick={props.downVote}>
                 <ThumbDownIcon></ThumbDownIcon>
             </IconButton>
         </div>
