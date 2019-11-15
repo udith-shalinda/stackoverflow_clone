@@ -10,6 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
+import { useLastLocation } from 'react-router-last-location';
 
 import './Login.css'
 
@@ -30,7 +31,10 @@ export function Login(props){
       const [errorPassword,setErrorPassword] = useState(false);
       let colors = props.colorState.colors[props.colorState.colorCount];
 
-    
+    //logisnfsdfsffs
+    const lastLocation = useLastLocation();
+
+
       const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value });
       };
@@ -75,13 +79,19 @@ export function Login(props){
           setloading("No")
          setErrorEmail(true);
         }
-        
     }
     const redirectHandler = () =>{
+
       if(values.redirect){
-        return(
-          <Redirect to='/' /> 
-        );
+        if(lastLocation.pathname != null){
+          return(
+            <Redirect to={lastLocation.pathname} /> 
+          );
+        }else{
+          return(
+            <Redirect to='/'/> 
+          )
+        }
       }else{
         return null;
       }

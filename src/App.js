@@ -11,6 +11,9 @@ import configureStore from './redux/store'
 import Home from './components/home/Home';
 import AddQuestion from './components/question/addQuestion/AddQuestion';
 import OneQuestion from './components/question/oneQuestion/OneQuestion';
+import { LastLocationProvider } from 'react-router-last-location';
+
+
 // import {setUser,setLoginState} from './redux/actions'
 const store = configureStore;
 console.log(store.getState())
@@ -31,6 +34,7 @@ function App() {
     <Provider store={store}> 
       <div className="App" >
         <BrowserRouter>
+          <LastLocationProvider>
                 <Header/>
               <Switch >
                 <Route exact path = "/" component={()=><Test />} />
@@ -40,6 +44,7 @@ function App() {
                 <Route exact path = "/oneQuestion/:id" component={()=><OneQuestion />} />
                 <PrivateRoute path='/addQuestion' component={AddQuestion} />
             </Switch>
+          </LastLocationProvider>
         </BrowserRouter>
       </div>
     </Provider>
