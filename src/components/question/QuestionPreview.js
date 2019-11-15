@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card } from '@material-ui/core'
+import QuestionProfileDetails from './QuestionProfileDetails';
 
 import './Question.css'
-import QuestionProfileDetails from './QuestionProfileDetails';
 
 const QuestionPreview =(props)=>{
     return(
@@ -22,7 +22,7 @@ const QuestionPreview =(props)=>{
                     <div className="content">
                         <h2>{props.question}</h2>
                         <p>{props.description}</p>
-                        <QuestionProfileDetails name={props.profile}/>
+                        <QuestionProfileDetails name={props.name} votes={props.userVotes} profileLink={props.profileLink}/>
                     </div>
                 </div>
             </Card>

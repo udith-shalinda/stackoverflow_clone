@@ -31,9 +31,13 @@ const Home =(props)=>{
                 console.log(question.createrDetails.name);
                 return(
                     <div>
-                        <QuestionPreview question={question.question} 
+                        <QuestionPreview 
+                        key={question.id}
+                        question={question.question} 
                         description={question.description} 
-                        profile={question.createrDetails.name}
+                        name={question.createrDetails.name}
+                        userVotes = {question.createrDetails.votes}
+                        profileLink={question.createrDetails.profilePictureLink}
                         voters = {question.voters}
                         answerCount = {question.answerCount}
                         />
@@ -45,13 +49,8 @@ const Home =(props)=>{
 
     return(
         <div>
+            <br></br>
            {questionPreview()}
-            <QuestionPreview/>
-
-            <QuestionPreview/>
-            <QuestionPreview/>
-            
-
         </div>
     );
 }

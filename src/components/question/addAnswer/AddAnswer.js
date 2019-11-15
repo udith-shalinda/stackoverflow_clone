@@ -21,7 +21,9 @@ const AddAnswer = (props)=>{
     setValues({ ...values, [prop]: event.target.value });
     };
 
-    
+    const addAnswerHandler=()=>{
+        
+    }
     
 
     return(
@@ -77,7 +79,7 @@ const AddAnswer = (props)=>{
                     />
                     <Button  variant="contained" id="button" 
                         style={{color:colors.theamFontColor, backgroundColor:colors.bodyBackgroundColor}}
-                        onClick={addQuestionHandler}
+                        onClick={addAnswerHandler}
                     >Add Answer</Button>
                 </form>
             </Card>

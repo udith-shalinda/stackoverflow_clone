@@ -11,7 +11,7 @@ const QuestionProfileDetails =(props)=>{
             </div>
             <div className="profileDetails">
                 <p>{props.name}</p>
-                <p>3</p>
+                <p>{props.votes}</p>
             </div>
         </div>
     );
