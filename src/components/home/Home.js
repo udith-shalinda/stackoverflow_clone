@@ -32,14 +32,14 @@ const Home =(props)=>{
                 return(
                     <div>
                         <QuestionPreview 
-                        key={question.id}
-                        question={question.question} 
-                        description={question.description} 
-                        name={question.createrDetails.name}
-                        userVotes = {question.createrDetails.votes}
-                        profileLink={question.createrDetails.profilePictureLink}
-                        voters = {question.voters}
-                        answerCount = {question.answerCount}
+                            id={question.id}
+                            question={question.question} 
+                            description={question.description} 
+                            name={question.createrDetails.name}
+                            userVotes = {question.createrDetails.votes}
+                            profileLink={question.createrDetails.profilePictureLink}
+                            voters = {question.voters}
+                            answerCount = {question.answerCount}
                         />
                     </div>
                 )

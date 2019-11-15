@@ -3,13 +3,13 @@ import { IconButton } from '@material-ui/core';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
-const Votes=()=>{
+const Votes=(props)=>{
     return(
         <div >
             <IconButton>
                 <ThumbUpIcon></ThumbUpIcon>
             </IconButton>
-            <p>0</p>
+            <p>{props.votes}</p>
             <IconButton>
                 <ThumbDownIcon></ThumbDownIcon>
             </IconButton>

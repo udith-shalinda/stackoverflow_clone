@@ -37,7 +37,7 @@ function App() {
                 <Route exact path = "/login" component={()=><Login />} />
                 <Route exact path = "/signup" component={()=><SignUp />} />
                 <Route exact path = "/home" component={()=><Home />} />
-                <Route exact path = "/oneQuestion" component={()=><OneQuestion />} />
+                <Route exact path = "/oneQuestion/:id" component={()=><OneQuestion />} />
                 <PrivateRoute path='/addQuestion' component={AddQuestion} />
             </Switch>
         </BrowserRouter>

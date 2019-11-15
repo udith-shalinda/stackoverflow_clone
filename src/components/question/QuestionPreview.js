@@ -8,7 +8,7 @@ import './Question.css'
 const QuestionPreview =(props)=>{
     return(
         <div >
-            <Link to={'/oneQuestion'} className="link">
+            <Link to={'/oneQuestion/'+props.id} className="link" >
                 <Card className="questionCard">
                     <div className="question">
                         <div className="content votes">
