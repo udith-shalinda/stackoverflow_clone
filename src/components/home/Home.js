@@ -5,6 +5,7 @@ import Axios from 'axios';
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../redux/actions/UserLogin';
+import {getAllQuestions} from '../../redux/actions/AllQuestions'
 
 
 
@@ -13,12 +14,10 @@ const Home =(props)=>{
     const [questiondata,setQuestionData] = useState([{}]);
 
     const getAllQuestions=async ()=>{
-        try{
-            const res = await Axios.get('http://localhost:8102/api/question/getAllQuestions');
-            console.log(res.data);  
-            setQuestionData(res.data);
-        }catch(e){
-            console.log(e);
+        if(props.allQuestions === null){
+            setQuestionData(await props.getAllQuestions());
+        }else{
+            setQuestionData(props.allQuestions);
         }
     }
     useEffect(()=>{
@@ -60,12 +59,13 @@ const mapStateToProps = state => {
       userId: state.userId.userId,
       token:state.userToken.token,
       colorState:state.colorState,
+      allQuestions:state.questionState.questions
      };
   };
   
   export default connect(
     mapStateToProps,
-    { setUserId }
+    { setUserId,getAllQuestions }
   )(Home)
 
 // export default Home;
