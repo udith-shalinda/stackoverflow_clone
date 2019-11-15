@@ -5,24 +5,24 @@
 }
 .content{
     display: inline-block;
-    flex-grow: 1;
 }
 .question{
     display:flex;
 }
 .votes{
     text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 .profilePart{
     display: flex;
 }
 .avatar{
-    /* background: red; */
+   
     width: 50px; 
     margin-top: 20px;
 }
 .profileDetails{
     text-align: center;
-    /* background: blue; */
-
+    
 }

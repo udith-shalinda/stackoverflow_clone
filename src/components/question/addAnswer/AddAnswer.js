@@ -21,9 +21,7 @@ const AddAnswer = (props)=>{
     setValues({ ...values, [prop]: event.target.value });
     };
 
-    const addQuestionHandler = ()=>{
-        // if
-    }
+    
     
 
     return(
