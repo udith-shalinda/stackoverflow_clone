@@ -4,22 +4,32 @@
     margin: auto;
 }
 .content{
-    display: inline-block;
+    /* display: inline-block; */
+    width: 100%;
+    /* background: red; */
+    /* display: inline; */
 }
 .question{
     display:flex;
 }
 .votes{
     text-align: center;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-top: 20px;
+    width: 20%;
 }
 .profilePart{
     display: flex;
+}
+.questionPart{
+    width: 80%;
 }
 .avatar{
    
     width: 50px; 
     margin-top: 20px;
     padding-right: 20px;
+}
+
+.link{
+    text-decoration: none;
 }

@@ -3,11 +3,13 @@ import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
 import { Card } from '@material-ui/core';
 
+// import './OneAnswer.css'
+
 
 const OneAnswer = ()=>{
     return(
         <div>
-            <Card className="questionCard">
+            <Card className="oneAnswerCard">
                 <div className="question">
                     <div className="content votes">
                         <Votes/>
