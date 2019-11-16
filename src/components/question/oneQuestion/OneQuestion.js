@@ -7,11 +7,16 @@ import AddAnswer from '../addAnswer/AddAnswer'
 import {useParams,withRouter} from "react-router-dom";
 import Axios from 'axios';
 import '../Question.css'
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../../redux/actions/UserLogin';
 
+
+
+let stompClient = null;
 
 
 const OneQuestion =(props)=>{
@@ -21,7 +26,24 @@ const OneQuestion =(props)=>{
 
     useEffect(()=>{
         getOneQuestion();
+        subscribeVotes();
     },[])
+    
+
+    const subscribeVotes=()=>{
+        var sock = new SockJS('http://localhost:8102/api/ws');
+      stompClient = Stomp.over(sock);
+      sock.onopen = function() {
+          console.log('open');
+      }
+      stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/user/question/'+id, function (greeting) {
+            getOneQuestion();
+            console.log(greeting);
+        });
+      });
+    }
 
 
     const getOneQuestion = async ()=>{
@@ -74,6 +96,7 @@ const OneQuestion =(props)=>{
         }catch(e){
             console.log(e);
         }
+        stompClient.send("/app/question/votes/"+id, {},"sf");
     } 
     const doQuestionDownvote=async ()=>{
         console.log("downvote clicked");
@@ -92,6 +115,7 @@ const OneQuestion =(props)=>{
         }catch(e){
             console.log(e);
         }
+        stompClient.send("/app/question/votes/"+id, {});
     }
 
     const showAnswers = ()=>{
@@ -108,6 +132,8 @@ const OneQuestion =(props)=>{
                                 createrName={answer.createrDetails.name}
                                 createrVotes ={answer.createrDetails.votes}
                                 createrProfileLink={answer.createrDetails.profilePictureLink}
+                                upVoted={answer.upVoted}
+                                downVoted={answer.downVoted}
                             ></OneAnswer>
                             <br/>
                         </div>
@@ -128,10 +154,13 @@ const OneQuestion =(props)=>{
                 <Card className="questionCard">
                 <div className="question">
                     <div className="content votes">
-                        <Votes 
+                        <Votes
+                            id={OneQuestion.id} 
                             votes={OneQuestion.voters}
                             upVote={doQuestionUpvote}
                             downVote={doQuestionDownvote}
+                            upVoted={OneQuestion.upVoted}
+                            downVoted={OneQuestion.downVoted}
                         />
                     </div>
                     <div className="content">

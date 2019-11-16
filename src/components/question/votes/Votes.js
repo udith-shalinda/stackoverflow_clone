@@ -7,11 +7,11 @@ const Votes=(props)=>{
     return(
         <div >
             <IconButton onClick={props.upVote}>
-                <ThumbUpIcon></ThumbUpIcon>
+                <ThumbUpIcon style={{color:props.upVoted?"red":"black"}}></ThumbUpIcon>
             </IconButton>
             <p>{props.votes}</p>
             <IconButton onClick={props.downVote}>
-                <ThumbDownIcon></ThumbDownIcon>
+                <ThumbDownIcon style={{color:props.downVoted?"red":"black"}}></ThumbDownIcon>
             </IconButton>
         </div>
     )

@@ -53,10 +53,13 @@ const OneAnswer = (props)=>{
             <Card className="oneAnswerCard">
                 <div className="question">
                     <div className="content votes">
-                        <Votes 
+                        <Votes
+                            id={props.id} 
                             votes={props.answerVotes}
                             upVote={doAnswerUpvote}
                             downVote={doAnswerDownvote}
+                            upVoted={props.upVoted}
+                            downVoted={props.downVoted}
                         />
                     </div>
                     <div className="content">
