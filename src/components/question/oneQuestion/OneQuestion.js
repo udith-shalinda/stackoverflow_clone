@@ -30,8 +30,11 @@ const OneQuestion =(props)=>{
                 "Authorization":"Bearer " + props.token,
             }
         }
+        const userDetailsId = {
+            userId:props.userId
+        }
         try{
-            const res = await Axios.get('http://localhost:8102/api/question/getOneQuestion/'+id,config);
+            const res = await Axios.post('http://localhost:8102/api/question/getOneQuestion/'+id,userDetailsId,config);
             console.log(res.data);  
             setOneQuestion(res.data);
         }catch(e){

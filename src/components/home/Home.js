@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import QuestionPreview from '../question/QuestionPreview';
-import Axios from 'axios';
 
 //redux
 import { connect } from 'react-redux'
