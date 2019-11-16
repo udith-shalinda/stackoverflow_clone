@@ -12,6 +12,7 @@ import Home from './components/home/Home';
 import AddQuestion from './components/question/addQuestion/AddQuestion';
 import OneQuestion from './components/question/oneQuestion/OneQuestion';
 import { LastLocationProvider } from 'react-router-last-location';
+import { Profile } from './components/profile/Profile';
 
 
 // import {setUser,setLoginState} from './redux/actions'
@@ -43,6 +44,8 @@ function App() {
                 <Route exact path = "/home" component={()=><Home />} />
                 <PrivateRoute path='/addQuestion' component={AddQuestion} />
                 <PrivateRoute path='/oneQuestion/:id' component={OneQuestion} />
+                <PrivateRoute path='/profile' component={Profile} />
+                {/* <Route exact path = "/profile" component={()=><Profile />} /> */}
             </Switch>
           </LastLocationProvider>
         </BrowserRouter>

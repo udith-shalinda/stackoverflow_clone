@@ -1,4 +1,4 @@
-const profileDataState = (state = {payload:{profileData:null}},action)=>{
+const profileDataState = (state = {profileData:null},action)=>{
     switch(action.type){
         case 'GET_PROFILE_DATA':
             return{
