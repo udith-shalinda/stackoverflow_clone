@@ -81,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-export function Header(props) {
+export const Header=(props) =>{
 
 
   const classes = useStyles();
@@ -181,16 +181,16 @@ export function Header(props) {
 }
 
 
-// const mapStateToProps = state => {
-//   return { 
-//     userState: state.userId,
-//     colorState:state.colorState,
-//   };
-// };
+const mapStateToProps = state => {
+  return { 
+    userState: state.userId,
+    colorState:state.colorState,
+  };
+};
 
-// export default connect(
-//   mapStateToProps,
-//   { setUserId,setUserToken,changeTheamColor}
-// )(Header)
+export default connect(
+  mapStateToProps,
+  { setUserId,setUserToken,changeTheamColor}
+)(Header)
 
 // export default Header;
