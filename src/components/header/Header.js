@@ -181,16 +181,16 @@ export function Header(props) {
 }
 
 
-const mapStateToProps = state => {
-  return { 
-    userState: state.userId,
-    colorState:state.colorState,
-  };
-};
+// const mapStateToProps = state => {
+//   return { 
+//     userState: state.userId,
+//     colorState:state.colorState,
+//   };
+// };
 
-export default connect(
-  mapStateToProps,
-  { setUserId,setUserToken,changeTheamColor}
-)(Header)
+// export default connect(
+//   mapStateToProps,
+//   { setUserId,setUserToken,changeTheamColor}
+// )(Header)
 
 // export default Header;
