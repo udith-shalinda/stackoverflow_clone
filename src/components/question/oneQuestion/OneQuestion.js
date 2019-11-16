@@ -41,6 +41,7 @@ const OneQuestion =(props)=>{
         stompClient.subscribe('/topic/user/question/'+id, function (greeting) {
             getOneQuestion();
             console.log(greeting);
+            
         });
       });
     }
@@ -67,7 +68,11 @@ const OneQuestion =(props)=>{
     const addAnswerHandler = ()=>{
         if(addAnswerState){
             return(
-               <AddAnswer questionId={OneQuestion.id}/> 
+               <AddAnswer 
+               questionId={OneQuestion.id}
+                getOneQuestion={getOneQuestion}
+                stompClient={stompClient}
+                /> 
             )
         }else{
             return(
@@ -76,9 +81,6 @@ const OneQuestion =(props)=>{
         }
     }
 
-    // const testRedirect=()=>{
-    //     props.history.push('/login')
-    // }
     const doQuestionUpvote=async ()=>{
         console.log("upvote clicked");
         let config = {
@@ -92,11 +94,13 @@ const OneQuestion =(props)=>{
         try{
             const res = await Axios.put('http://localhost:8102/api/question/addUpVoter/'+id,voter,config);
             console.log(res.data);  
-            // setOneQuestion(res.data);
+            if(res.data !== OneQuestion.voters){
+                stompClient.send("/app/question/votes/"+id, {});
+
+            }
         }catch(e){
             console.log(e);
         }
-        stompClient.send("/app/question/votes/"+id, {},"sf");
     } 
     const doQuestionDownvote=async ()=>{
         console.log("downvote clicked");
@@ -110,12 +114,14 @@ const OneQuestion =(props)=>{
         }
         try{
             const res = await Axios.put('http://localhost:8102/api/question/addDownVoter/'+id,voter,config);
-            console.log(res.data);  
-            // setOneQuestion(res.data);
+            console.log(res.data);
+            if(res.data !== OneQuestion.voters){
+                stompClient.send("/app/question/votes/"+id, {});
+
+            }  
         }catch(e){
             console.log(e);
         }
-        stompClient.send("/app/question/votes/"+id, {});
     }
 
     const showAnswers = ()=>{
@@ -134,6 +140,8 @@ const OneQuestion =(props)=>{
                                 createrProfileLink={answer.createrDetails.profilePictureLink}
                                 upVoted={answer.upVoted}
                                 downVoted={answer.downVoted}
+                                stompClient={stompClient}
+                                questionId={id}
                             ></OneAnswer>
                             <br/>
                         </div>

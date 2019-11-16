@@ -15,8 +15,10 @@ const Home =(props)=>{
     const getAllQuestions=async ()=>{
         if(props.allQuestions === null){
             setQuestionData(await props.getAllQuestions());
+            console.log(questiondata);
         }else{
             setQuestionData(props.allQuestions);
+            console.log(questiondata);
         }
     }
     useEffect(()=>{
@@ -25,8 +27,8 @@ const Home =(props)=>{
 
     const questionPreview = ()=>{
         if(questiondata.length>1){
-            return questiondata.map((question)=>{
-                console.log(question.createrDetails.name);
+            return questiondata.map((question,index)=>{
+                console.log(index);
                 return(
                     <div>
                         <QuestionPreview 

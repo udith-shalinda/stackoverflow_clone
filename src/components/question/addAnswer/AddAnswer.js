@@ -46,7 +46,11 @@ const AddAnswer = (props)=>{
         }
         try{
             const resTwo = await Axios.put('http://localhost:8102/api/question/addAnswer/'+props.questionId,answerIdData,config);
-            console.log(resTwo.data);  
+            console.log(resTwo.data); 
+            if(resTwo.data !== null){
+                props.stompClient.send("/app/question/votes/"+props.questionId, {});
+
+            } 
         }catch(e){
             console.log(e);
         }

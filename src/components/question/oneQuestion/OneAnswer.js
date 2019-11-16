@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
 import { Card } from '@material-ui/core';
 import Axios from 'axios';
+// import SockJS from 'sockjs-client';
+// import Stomp from 'stompjs';
 
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../../redux/actions/UserLogin';
 
 
+
 const OneAnswer = (props)=>{
+
 
     const doAnswerUpvote=async ()=>{
         console.log("upvote clicked");
@@ -24,7 +28,10 @@ const OneAnswer = (props)=>{
         try{
             const res = await Axios.put('http://localhost:8102/api/answer/addUpVoter/'+props.id,voter,config);
             console.log(res.data);  
-            // setOneQuestion(res.data);
+            if(res.data !== props.answerVotes){
+                props.stompClient.send("/app/question/votes/"+props.questionId, {});
+
+            }  
         }catch(e){
             console.log(e);
         }
@@ -42,7 +49,10 @@ const OneAnswer = (props)=>{
         try{
             const res = await Axios.put('http://localhost:8102/api/answer/addDownVoter/'+props.id,voter,config);
             console.log(res.data);  
-            // setOneQuestion(res.data);
+            if(res.data !== props.answerVotes){
+                props.stompClient.send("/app/question/votes/"+props.questionId, {});
+
+            }  
         }catch(e){
             console.log(e);
         }
