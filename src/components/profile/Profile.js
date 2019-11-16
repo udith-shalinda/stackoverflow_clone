@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Card } from '@material-ui/core'
 
 //redux
@@ -7,7 +7,7 @@ import { setUserId,setUserToken } from '../../redux/actions/UserLogin';
 import {changeTheamColor} from '../../redux/actions/color';
 
 
-export const Profile=(props)=>{
+ export const Profile = (props)=>{
     return(
         <div>
             <Card>
@@ -16,7 +16,7 @@ export const Profile=(props)=>{
             </Card>
         </div>
     );
-}
+};
 
 const mapStateToProps = state => {
     return { 
