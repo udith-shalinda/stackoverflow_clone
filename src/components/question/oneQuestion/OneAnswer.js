@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
 import { Card } from '@material-ui/core';
