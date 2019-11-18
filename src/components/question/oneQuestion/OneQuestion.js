@@ -9,6 +9,8 @@ import Axios from 'axios';
 import '../Question.css'
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import {Link} from 'react-router-dom';
+
 
 //redux
 import { connect } from 'react-redux'
@@ -194,7 +196,9 @@ const OneQuestion =(props)=>{
         if(props.userId === OneQuestion.createrId){
             return(
                 <div>
-                    <Button>Edit</Button>
+                    <Link to={'/editQuestion/'+id} className="link" >
+                        <Button>Edit</Button>
+                    </Link>
                     <Button onClick={deleteQuestionHandler}>Delete</Button>
                 </div>
             )
