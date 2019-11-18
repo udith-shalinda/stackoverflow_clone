@@ -98,7 +98,6 @@ const OneQuestion =(props)=>{
             console.log(res.data);  
             if(res.data !== OneQuestion.voters){
                 stompClient.send("/app/question/votes/"+id, {});
-
             }
         }catch(e){
             console.log(e);
