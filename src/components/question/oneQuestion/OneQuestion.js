@@ -71,9 +71,10 @@ const OneQuestion =(props)=>{
         if(addAnswerState){
             return(
                <AddAnswer 
-               questionId={OneQuestion.id}
-                getOneQuestion={getOneQuestion}
-                stompClient={stompClient}
+                    questionId={OneQuestion.id}
+                    getOneQuestion={getOneQuestion}
+                    stompClient={stompClient}
+                    setAnswerState={setAnswerStateHandler}
                 /> 
             )
         }else{
@@ -81,6 +82,9 @@ const OneQuestion =(props)=>{
                 <Button onClick={()=>{setAnswerState(true)}}>Add Answer</Button>
             )
         }
+    }
+    const setAnswerStateHandler=()=>{
+        setAnswerState(false);
     }
 
     const doQuestionUpvote=async ()=>{

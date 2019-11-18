@@ -49,7 +49,7 @@ const AddAnswer = (props)=>{
             console.log(resTwo.data); 
             if(resTwo.data !== null){
                 props.stompClient.send("/app/question/votes/"+props.questionId, {});
-
+                props.setAnswerStateHandler();
             } 
         }catch(e){
             console.log(e);
