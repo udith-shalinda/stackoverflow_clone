@@ -23,6 +23,11 @@ const OneQuestion =(props)=>{
     let { id } = useParams();
     const [addAnswerState,setAnswerState] = useState(false);
     const [OneQuestion,setOneQuestion] = useState(null);
+    let config = {
+        headers: {
+            "Authorization":"Bearer " + props.token,
+        }
+    }
 
     useEffect(()=>{
         getOneQuestion();
@@ -48,11 +53,6 @@ const OneQuestion =(props)=>{
 
 
     const getOneQuestion = async ()=>{
-        let config = {
-            headers: {
-                "Authorization":"Bearer " + props.token,
-            }
-        }
         const userDetailsId = {
             userId:props.userId
         }
@@ -83,11 +83,7 @@ const OneQuestion =(props)=>{
 
     const doQuestionUpvote=async ()=>{
         console.log("upvote clicked");
-        let config = {
-            headers: {
-                "Authorization":"Bearer " + props.token,
-            }
-        }
+        
         const voter ={
             userId:props.userId
         }
@@ -104,11 +100,6 @@ const OneQuestion =(props)=>{
     } 
     const doQuestionDownvote=async ()=>{
         console.log("downvote clicked");
-        let config = {
-            headers: {
-                "Authorization":"Bearer " + props.token,
-            }
-        }
         const voter ={
             userId:props.userId
         }
@@ -179,6 +170,7 @@ const OneQuestion =(props)=>{
                             votes={OneQuestion.createrDetails.votes} 
                             profileLink={OneQuestion.createrDetails.profileLink}/>
                         
+                        {editDeleteButtonHander()}
                         {showAnswers()}
                         {addAnswerHandler()}
                     </div>
@@ -197,6 +189,27 @@ const OneQuestion =(props)=>{
                     />
             )
         }
+    }
+    const editDeleteButtonHander=()=>{
+        if(props.userId === OneQuestion.createrId){
+            return(
+                <div>
+                    <Button>Edit</Button>
+                    <Button onClick={deleteQuestionHandler}>Delete</Button>
+                </div>
+            )
+        }else{
+            return(
+                null
+            )
+        }
+    }
+    const deleteQuestionHandler = async()=>{
+        let Question={
+            answerIdList:OneQuestion.answerIdList,
+        }
+        const res = await Axios.post('http://localhost:8102/api/question/delete/'+id,Question,config);
+        console.log(res.data);
     }
 
     return(
