@@ -6,8 +6,7 @@ import Stomp from 'stompjs';
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../redux/actions/UserLogin';
-import {getAllQuestions,getOneQuestions} from '../../redux/actions/AllQuestions'
-import Axios from 'axios';
+import {getAllQuestions} from '../../redux/actions/AllQuestions'
 
 
 let stompClient = null;
@@ -91,7 +90,7 @@ const mapStateToProps = state => {
   
   export default connect(
     mapStateToProps,
-    { setUserId,getAllQuestions ,getOneQuestions}
+    { setUserId,getAllQuestions }
   )(Home)
 
 // export default Home;

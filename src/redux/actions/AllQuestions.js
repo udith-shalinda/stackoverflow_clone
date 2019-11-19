@@ -14,10 +14,3 @@ export const getAllQuestions = () =>  async dispatch=>{
     }
     
 };
-export const getOneQuestions = (data) =>  async dispatch=>{
-    dispatch({
-        type:'GET_ALL_QUESTIONS',
-        questions:data 
-    })
-    return data; 
-};
