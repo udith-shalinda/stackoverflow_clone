@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import QuestionPreview from '../question/QuestionPreview';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import { Pagination } from 'semantic-ui-react'
 
 //redux
 import { connect } from 'react-redux'
@@ -75,6 +76,16 @@ const Home =(props)=>{
         <div>
             <br></br>
            {questionPreview()}
+           <div>
+            <Pagination
+                    defaultActivePage={1}
+                    firstItem={null}
+                    lastItem={null}
+                    pointing
+                    secondary
+                    totalPages={3}
+                />
+           </div>
         </div>
     );
 }
