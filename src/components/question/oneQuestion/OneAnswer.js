@@ -30,6 +30,7 @@ const OneAnswer = (props)=>{
             console.log(res.data);  
             if(res.data !== props.answerVotes){
                 props.stompClient.send("/app/question/votes/"+props.questionId, {});
+                props.stompClient.send("/app/question/home/"+props.questionId, {});
 
             }  
         }catch(e){
@@ -51,7 +52,7 @@ const OneAnswer = (props)=>{
             console.log(res.data);  
             if(res.data !== props.answerVotes){
                 props.stompClient.send("/app/question/votes/"+props.questionId, {});
-
+                props.stompClient.send("/app/question/home/"+props.questionId, {});
             }  
         }catch(e){
             console.log(e);

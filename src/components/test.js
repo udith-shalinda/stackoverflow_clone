@@ -31,16 +31,7 @@ function Test() {
             console.log(greeting);
         });
       });
-      // sock.onmessage = function(e) {
-      //     console.log('message', e.data);
-      //     sock.close();
-      // };
      
-      // sock.onclose = function() {
-      //     console.log('close');
-      // };
-      // sock.send("test");
-      
     }
     const send = ()=>{
       stompClient.send("/app/addUser", {},"fusdfsd");

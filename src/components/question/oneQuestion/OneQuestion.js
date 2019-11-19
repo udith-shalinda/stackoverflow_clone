@@ -98,6 +98,7 @@ const OneQuestion =(props)=>{
             console.log(res.data);  
             if(res.data !== OneQuestion.voters){
                 stompClient.send("/app/question/votes/"+id, {});
+                stompClient.send("/app/question/home/"+id, {});
             }
         }catch(e){
             console.log(e);
@@ -113,6 +114,7 @@ const OneQuestion =(props)=>{
             console.log(res.data);
             if(res.data !== OneQuestion.voters){
                 stompClient.send("/app/question/votes/"+id, {});
+                stompClient.send("/app/question/home/"+id, {});
 
             }  
         }catch(e){

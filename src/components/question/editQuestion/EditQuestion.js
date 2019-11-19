@@ -86,6 +86,8 @@ const EditQuestion =(props)=>{
             const res = await Axios.put('http://localhost:8102/api/question/update/'+id,questionDetails,config);
             console.log(res.data);  
             stompClient.send("/app/question/votes/"+id, {});
+            stompClient.send("/app/question/home/"+id, {});
+
         }catch(e){
             console.log(e);
         }

@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import QuestionPreview from '../question/QuestionPreview';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../redux/actions/UserLogin';
-import {getAllQuestions} from '../../redux/actions/AllQuestions'
+import {getAllQuestions,getOneQuestions} from '../../redux/actions/AllQuestions'
+import Axios from 'axios';
 
 
+let stompClient = null;
 
 const Home =(props)=>{
 
-    const [questiondata,setQuestionData] = useState([{}]);
+    const [questiondata,setQuestionData] = useState([]);
+
+    useEffect(()=>{
+        getAllQuestions();
+        subscribeVotes();
+    },[])
 
     const getAllQuestions=async ()=>{
         if(props.allQuestions === null){
@@ -21,12 +30,39 @@ const Home =(props)=>{
             console.log(questiondata);
         }
     }
-    useEffect(()=>{
-        getAllQuestions();
-    },[])
+    
+    const subscribeVotes=()=>{
+        var sock = new SockJS('http://localhost:8102/api/ws');
+      stompClient = Stomp.over(sock);
+      sock.onopen = function() {
+          console.log('open');
+      }
+      stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/user/home', function (res) {
+            updateQuestion(res);
+            console.log(res);
+            props.getOneQuestions(questiondata);
+        });
+      });
+    }
+    const updateQuestion =  (questionId)=>{
+        if(questiondata.length>=1){
+             questiondata.map((question,index)=>{
+                if(question.id===questionId){
+                   getOneQueestion(index,questionId);
+                }
+            });
+        }
+    }
+    const getOneQueestion=async(index,questionId)=>{
+        let oneQuestion = await Axios.get('http://localhost:8102/api/question/getOneQuestionPreview/'+questionId);
+        console.log(oneQuestion.data);
+        questiondata[index] = oneQuestion;
+    }
 
     const questionPreview = ()=>{
-        if(questiondata.length>1){
+        if(questiondata.length>=1){
             return questiondata.map((question,index)=>{
                 console.log(index);
                 return(
@@ -66,7 +102,7 @@ const mapStateToProps = state => {
   
   export default connect(
     mapStateToProps,
-    { setUserId,getAllQuestions }
+    { setUserId,getAllQuestions ,getOneQuestions}
   )(Home)
 
 // export default Home;
