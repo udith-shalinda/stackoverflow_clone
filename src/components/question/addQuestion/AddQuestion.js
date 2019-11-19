@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import {Redirect} from 'react-router'
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 import './AddQuestion.css'
 
@@ -11,9 +13,23 @@ import { setUserId } from '../../../redux/actions/UserLogin';
 import Axios from 'axios';
 
 
-
+let stompClient = null;
 
 const AddQuestion =(props)=>{
+    useEffect(()=>{
+        subscribeVotes();
+    },[])
+
+    const subscribeVotes=()=>{
+        var sock = new SockJS('http://localhost:8102/api/ws');
+      stompClient = Stomp.over(sock);
+      sock.onopen = function() {
+          console.log('open');
+      }
+      stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+      });
+    }
 
     const [values, setValues] = React.useState({
         question:'',
@@ -54,6 +70,7 @@ const AddQuestion =(props)=>{
                 ...values,
                 redirect:true,
             })
+            stompClient.send("/app/question/home/"+"props.questionId", {});
         }catch(e){
             console.log(e);
         }
