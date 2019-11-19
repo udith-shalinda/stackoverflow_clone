@@ -40,26 +40,15 @@ const Home =(props)=>{
       stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/user/home', function (res) {
-            updateQuestion(res);
-            console.log(res);
-            props.getOneQuestions(questiondata);
+            updateQuestion();
+            console.log(res.body);
         });
       });
     }
-    const updateQuestion =  (questionId)=>{
-        if(questiondata.length>=1){
-             questiondata.map((question,index)=>{
-                if(question.id===questionId){
-                   getOneQueestion(index,questionId);
-                }
-            });
-        }
+    const updateQuestion =  async()=>{
+        setQuestionData(await props.getAllQuestions());
     }
-    const getOneQueestion=async(index,questionId)=>{
-        let oneQuestion = await Axios.get('http://localhost:8102/api/question/getOneQuestionPreview/'+questionId);
-        console.log(oneQuestion.data);
-        questiondata[index] = oneQuestion;
-    }
+    
 
     const questionPreview = ()=>{
         if(questiondata.length>=1){
