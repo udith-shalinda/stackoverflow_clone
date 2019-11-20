@@ -25,7 +25,7 @@ const OneQuestion =(props)=>{
     let { id } = useParams();
     const [addAnswerState,setAnswerState] = useState(false);
     const [OneQuestion,setOneQuestion] = useState(null);
-    const [someOneAddingAnswer, setsomeOneAddAnswer] = useState({id:null,name:null});
+    const [someOneAddingAnswer, setsomeOneAddAnswer] = useState(null);
     let config = {
         headers: {
             "Authorization":"Bearer " + props.token,
@@ -53,10 +53,7 @@ const OneQuestion =(props)=>{
         });
         stompClient.subscribe('/topic/user/addAnswer/'+id, function (res) {
             console.log("addding a answer "+res.body);
-            setsomeOneAddAnswer({
-                ...someOneAddingAnswer,
-                id:res.body
-            });
+            setsomeOneAddAnswer(res.body);
         });
       });
     }
@@ -107,6 +104,7 @@ const OneQuestion =(props)=>{
             if(res.data !== OneQuestion.voters){
                 stompClient.send("/app/question/votes/"+id, {});
                 stompClient.send("/app/question/home/"+id, {});
+                setsomeOneAddAnswer(null)
             }
         }catch(e){
             console.log(e);
@@ -160,23 +158,12 @@ const OneQuestion =(props)=>{
             )
         }
     }
-    const gettypesUserName=async()=>{
-        try{
-            let userDetails =await Axios.put('http://localhost:8102/api/userDetails/getUserDetailsById/'+someOneAddingAnswer,config);
-            setsomeOneAddAnswer({
-                ...someOneAddingAnswer,
-                name:userDetails.name
-            })
-        }catch(e){
-            console.log(e);
-        }
-    }
 
     const indicateAddingAnswer= ()=>{
-        if(someOneAddingAnswer.id!== null){
-            if(someOneAddingAnswer.id !== props.userId){
+        if(someOneAddingAnswer !== null){
+            if(someOneAddingAnswer !== props.userId){
                return(
-                   <div>fsfsfsfs</div>
+                   <div>some one is typing</div>
                )
             }else{
                 return null;
