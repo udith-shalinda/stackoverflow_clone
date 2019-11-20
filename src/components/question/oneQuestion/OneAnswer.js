@@ -1,8 +1,9 @@
 import React from 'react';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
-import { Card } from '@material-ui/core';
+import { Card, Button } from '@material-ui/core';
 import Axios from 'axios';
+import {Link} from 'react-router-dom';
 // import SockJS from 'sockjs-client';
 // import Stomp from 'stompjs';
 
@@ -58,6 +59,36 @@ const OneAnswer = (props)=>{
             console.log(e);
         }
     }
+    const editDeleteButtonHander=()=>{
+        if(props.disabledButton){
+            return(
+                <div>
+                    <Link to={'/editAnswer/'+props.id} className="link" >
+                        <Button>Edit</Button>
+                    </Link>
+                    <Button onClick={deleteAnswerHandler}>Delete</Button>
+                </div>
+            )
+        }else{
+            return(
+                null
+            )
+        }
+    }
+    const deleteAnswerHandler = async()=>{
+        let config = {
+            headers: {
+                "Authorization":"Bearer " + props.token,
+            }
+        }
+        const questionId ={
+            answerId:props.questionId
+        }
+        const res = await Axios.post('http://localhost:8102/api/answer/delete/'+props.id,questionId,config);
+        console.log(res.data);
+        props.stompClient.send("/app/question/votes/"+props.questionId, {});
+        props.stompClient.send("/app/question/home/"+props.questionId, {});
+    }
 
     return(
         <div>
@@ -84,6 +115,7 @@ const OneAnswer = (props)=>{
                         />
                     </div>
                 </div>
+                    {editDeleteButtonHander()}
             </Card>
         </div>
     );
