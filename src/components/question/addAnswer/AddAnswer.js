@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 
@@ -17,6 +17,10 @@ const AddAnswer = (props)=>{
         redirect:false
       });
     let colors = props.colorState.colors[props.colorState.colorCount];
+
+    useEffect(()=>{
+        props.stompClient.send("/app/question/addAnswer/"+props.questionId, {},props.userId);
+    },[])
 
     const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
