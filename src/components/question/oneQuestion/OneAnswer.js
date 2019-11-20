@@ -71,6 +71,7 @@ const OneAnswer = (props)=>{
                             downVote={doAnswerDownvote}
                             upVoted={props.upVoted}
                             downVoted={props.downVoted}
+                            disabledButton={props.disabledButton}
                         />
                     </div>
                     <div className="content">

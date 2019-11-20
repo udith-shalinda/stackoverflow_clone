@@ -146,6 +146,7 @@ const OneQuestion =(props)=>{
                                 downVoted={answer.downVoted}
                                 stompClient={stompClient}
                                 questionId={id}
+                                disabledButton={answer.createrId===props.userId?true:false}
                             ></OneAnswer>
                             <br/>
                         </div>
@@ -186,6 +187,7 @@ const OneQuestion =(props)=>{
                             downVote={doQuestionDownvote}
                             upVoted={OneQuestion.upVoted}
                             downVoted={OneQuestion.downVoted}
+                            disabledButton={OneQuestion.createrId=== props.userId?true:false}
                         />
                     </div>
                     <div className="content">
