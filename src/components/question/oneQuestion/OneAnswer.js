@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
 import { Card, Button } from '@material-ui/core';
@@ -10,11 +10,12 @@ import {Link} from 'react-router-dom';
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../../redux/actions/UserLogin';
+import EditAnswer from '../editAnswer/EditAnswer';
 
 
 
 const OneAnswer = (props)=>{
-
+    const [editAnswer,setEditAnswer] = useState(false);
 
     const doAnswerUpvote=async ()=>{
         console.log("upvote clicked");
@@ -63,9 +64,7 @@ const OneAnswer = (props)=>{
         if(props.disabledButton){
             return(
                 <div>
-                    <Link to={'/editAnswer/'+props.id} className="link" >
-                        <Button>Edit</Button>
-                    </Link>
+                    <Button onClick={()=>{setEditAnswer(!editAnswer)}}>Edit</Button>
                     <Button onClick={deleteAnswerHandler}>Delete</Button>
                 </div>
             )
@@ -90,9 +89,9 @@ const OneAnswer = (props)=>{
         props.stompClient.send("/app/question/home/"+props.questionId, {});
     }
 
-    return(
-        <div>
-            <Card className="oneAnswerCard">
+    const answerOrEditAnswer = ()=>{
+        if(!editAnswer){
+            return(
                 <div className="question">
                     <div className="content votes">
                         <Votes
@@ -115,6 +114,18 @@ const OneAnswer = (props)=>{
                         />
                     </div>
                 </div>
+            )
+        }else{
+            return(
+                <EditAnswer id={props.id} questionId={props.questionId} setEditAnswer={setEditAnswer}></EditAnswer>
+            )
+        }
+    }
+
+    return(
+        <div>
+            <Card className="oneAnswerCard">
+                    {answerOrEditAnswer()}
                     {editDeleteButtonHander()}
             </Card>
         </div>

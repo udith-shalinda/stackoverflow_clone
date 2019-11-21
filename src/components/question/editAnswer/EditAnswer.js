@@ -14,7 +14,7 @@ import Axios from 'axios';
 let stompClient = null;
 
 const EditAnswer = (props)=>{
-    let { id } = useParams();
+    let id = props.id;
     const [values, setValues] = useState({
         answer:'',
         description:'',
@@ -73,7 +73,9 @@ const EditAnswer = (props)=>{
         try{
             const res = await Axios.put('http://localhost:8102/api/answer/update/'+id,answerData,config);
             console.log(res.data);  
-            stompClient.send("/app/question/home/questionId", {});
+            stompClient.send("/app/question/home/"+props.questionId, {});
+            stompClient.send("/app/question/votes/"+props.questionId, {});
+            props.setEditAnswer(false);
         }catch(e){
             console.log(e);
         }

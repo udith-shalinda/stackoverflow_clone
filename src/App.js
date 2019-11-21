@@ -14,7 +14,6 @@ import OneQuestion from './components/question/oneQuestion/OneQuestion';
 import { LastLocationProvider } from 'react-router-last-location';
 import { Profile } from './components/profile/Profile';
 import EditQuestion from './components/question/editQuestion/EditQuestion';
-import EditAnswer from './components/question/editAnswer/EditAnswer';
 
 
 // import {setUser,setLoginState} from './redux/actions'
@@ -48,7 +47,6 @@ function App() {
                 <PrivateRoute path='/oneQuestion/:id' component={OneQuestion} />
                 <PrivateRoute path='/profile' component={Profile} />
                 <PrivateRoute path='/editQuestion/:id' component={EditQuestion} />
-                <PrivateRoute path='/editAnswer/:id' component={EditAnswer} />
                 {/* <Route exact path = "/profile" component={()=><Profile />} /> */}
             </Switch>
           </LastLocationProvider>
