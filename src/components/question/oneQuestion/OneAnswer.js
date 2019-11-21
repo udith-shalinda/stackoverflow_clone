@@ -87,6 +87,20 @@ const OneAnswer = (props)=>{
         props.stompClient.send("/app/question/votes/"+props.questionId, {});
         props.stompClient.send("/app/question/home/"+props.questionId, {});
     }
+    const markAnswerHandler=async()=>{
+        let config = {
+            headers: {
+                "Authorization":"Bearer " + props.token,
+            }
+        }
+        const answerId ={
+            answerId:props.id
+        }
+        const res = await Axios.put('http://localhost:8102/api/question/updateMarkedAnswer/'+props.questionId,answerId,config);
+        console.log(res.data);
+        props.stompClient.send("/app/question/votes/"+props.questionId, {});
+        props.stompClient.send("/app/question/home/"+props.questionId, {});
+    }
 
 
     const answerOrEditAnswer = ()=>{
@@ -103,7 +117,7 @@ const OneAnswer = (props)=>{
                             downVoted={props.downVoted}
                             disabledButton={props.disabledButton}
                         />
-                        <IconButton disabled={props.markEneble}>
+                        <IconButton disabled={props.markEneble} onClick={markAnswerHandler}>
                             <CheckIcon style={{color:props.marked?"green":"black"}}></CheckIcon>
                         </IconButton>
                     </div>
