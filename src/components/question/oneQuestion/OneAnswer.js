@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
-import { Card, Button } from '@material-ui/core';
+import { Card, Button, IconButton } from '@material-ui/core';
 import Axios from 'axios';
-import {Link} from 'react-router-dom';
-// import SockJS from 'sockjs-client';
-// import Stomp from 'stompjs';
+import CheckIcon from '@material-ui/icons/Check';
+
 
 //redux
 import { connect } from 'react-redux'
@@ -89,6 +88,7 @@ const OneAnswer = (props)=>{
         props.stompClient.send("/app/question/home/"+props.questionId, {});
     }
 
+
     const answerOrEditAnswer = ()=>{
         if(!editAnswer){
             return(
@@ -103,6 +103,9 @@ const OneAnswer = (props)=>{
                             downVoted={props.downVoted}
                             disabledButton={props.disabledButton}
                         />
+                        <IconButton disabled={props.markEneble}>
+                            <CheckIcon style={{color:props.marked?"green":"black"}}></CheckIcon>
+                        </IconButton>
                     </div>
                     <div className="content">
                         <h2>{props.answer}</h2>

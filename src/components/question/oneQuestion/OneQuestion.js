@@ -147,6 +147,8 @@ const OneQuestion =(props)=>{
                                 stompClient={stompClient}
                                 questionId={id}
                                 disabledButton={answer.createrId===props.userId?true:false}
+                                markEneble={OneQuestion.createrId=== props.userId?false:true}
+                                marked={OneQuestion.markAnswer===answer.id?true:false}
                             ></OneAnswer>
                             <br/>
                         </div>
