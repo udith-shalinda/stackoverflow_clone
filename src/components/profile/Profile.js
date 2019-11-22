@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card } from '@material-ui/core'
+import {useParams} from "react-router-dom";
+
 
 //redux
 import { connect } from 'react-redux'
@@ -8,6 +10,10 @@ import {changeTheamColor} from '../../redux/actions/color';
 
 
  export const Profile = (props)=>{
+   const {id} =useParams();
+
+
+   
     return(
         <div>
             <Card>

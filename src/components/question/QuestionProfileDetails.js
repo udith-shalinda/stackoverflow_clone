@@ -5,7 +5,7 @@ import './Question.css'
 
 const QuestionProfileDetails =(props)=>{
     return(
-        <div className="profilePart">
+        <div className="profilePart" onClick={()=>{console.log("profile clicked")}}>
             <div className="avatar">
                 <Avatar  alt="Remy Sharp" src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg"  />
             </div>

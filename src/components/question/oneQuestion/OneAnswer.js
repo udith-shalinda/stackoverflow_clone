@@ -3,7 +3,7 @@ import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
 import { Card, Button, IconButton } from '@material-ui/core';
 import Axios from 'axios';
-import CheckIcon from '@material-ui/icons/Check';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 
 
 //redux
@@ -118,7 +118,7 @@ const OneAnswer = (props)=>{
                             disabledButton={props.disabledButton}
                         />
                         <IconButton disabled={props.markEneble} onClick={markAnswerHandler}>
-                            <CheckIcon style={{color:props.marked?"green":"black"}}></CheckIcon>
+                            <DoneOutlineIcon style={{color:props.marked?"green":"black"}}></DoneOutlineIcon>
                         </IconButton>
                     </div>
                     <div className="content">

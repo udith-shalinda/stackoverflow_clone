@@ -51,7 +51,7 @@ const Home =(props)=>{
     
 
     const questionPreview = ()=>{
-        if(questiondata.length>=1){
+        if(questiondata!== null && questiondata.length>=1){
             return questiondata.map((question,index)=>{
                 console.log(index);
                 return(
@@ -60,6 +60,7 @@ const Home =(props)=>{
                             id={question.id}
                             question={question.question} 
                             description={question.description} 
+                            createrId={question.createrId}
                             name={question.createrDetails.name}
                             userVotes = {question.createrDetails.votes}
                             profileLink={question.createrDetails.profilePictureLink}

@@ -45,7 +45,7 @@ function App() {
                 <Route exact path = "/home" component={()=><Home />} />
                 <PrivateRoute path='/addQuestion' component={AddQuestion} />
                 <PrivateRoute path='/oneQuestion/:id' component={OneQuestion} />
-                <PrivateRoute path='/profile' component={Profile} />
+                <Route exact path='/profile/:id' component={Profile} />
                 <PrivateRoute path='/editQuestion/:id' component={EditQuestion} />
                 {/* <Route exact path = "/profile" component={()=><Profile />} /> */}
             </Switch>
