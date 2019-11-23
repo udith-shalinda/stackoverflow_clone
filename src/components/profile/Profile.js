@@ -13,9 +13,11 @@ import Axios from 'axios';
  export const Profile = (props)=>{
    const {id} =useParams();
    const [profileData,setProfileData]= useState(null);
+   const [myQuestionList,setMyQuestionList]= useState(null);
 
    useEffect(()=>{
     getProfileData();
+    getMyQuestions();
    },[])
 
    const getProfileData=async ()=>{ 
@@ -27,6 +29,41 @@ import Axios from 'axios';
         console.log(e);
     }
   }
+  const getMyQuestions=async()=>{
+    try{
+      const res = await Axios.get('http://localhost:8102/api/question/getSomeOnesQuestion/'+id);
+      console.log(res.data);
+      setMyQuestionList(res.data); 
+    }catch(e){
+        console.log(e);
+    }
+  }
+  const renderMyQuestionList =()=>{
+    if(myQuestionList !== null){
+      if(myQuestionList.length>0){
+        return(
+          myQuestionList.map((question)=>{
+            return(
+              <Card>
+                <CardContent>{question.question}</CardContent>
+              </Card>
+            )
+          })
+        )
+      }else{
+        return(
+          <Card>
+            <p>No questions yet</p>
+          </Card>
+        )
+      }
+    }else{
+      return(
+        <div>loading.....</div>
+      )
+    }
+  } 
+  
     const renderProfileData = ()=>{
       if(profileData !== null){
         return(
@@ -43,7 +80,7 @@ import Axios from 'axios';
               </Card>
           </Grid>
           <Grid item xs={6} >
-              {/* {content()} */}
+              {renderMyQuestionList()}
           </Grid>
       </Grid>
           </div>

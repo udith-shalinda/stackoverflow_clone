@@ -123,7 +123,7 @@ export const Header=(props) =>{
               </IconButton>
             </Grid>
             <Grid item>
-              <Link to="/profile" className={classes.link}>
+              <Link to={"/profile/"+props.userState.userId} className={classes.link}>
                 <Avatar aria-label="recipe" className={classes.avatar}>
                   R
                 </Avatar>
