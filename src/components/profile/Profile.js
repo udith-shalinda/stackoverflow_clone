@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from '@material-ui/core'
+import { Card, CardMedia, IconButton, CardHeader, CardActions, Grid, CardContent } from '@material-ui/core'
 import {useParams} from "react-router-dom";
 
 
@@ -31,11 +31,21 @@ import Axios from 'axios';
       if(profileData !== null){
         return(
           <div>
-            <Card>
-                <p>{profileData.name}</p>
-                <p>{profileData.votes}</p>
-                <img src={profileData.profilePictureLink===null?"https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg":profileData.profilePictureLink}/>
-            </Card>
+            <Grid container>
+          <Grid item xs={4}>
+              <Card >
+              <img src={profileData.profilePictureLink===null?"https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg":profileData.profilePictureLink}/>
+              <CardHeader
+                  title={profileData.name}
+                  subheader={"Votes : "+profileData.votes}
+                  // subheaderTypographyProps={{color:props.fontColor}}
+              />
+              </Card>
+          </Grid>
+          <Grid item xs={6} >
+              {/* {content()} */}
+          </Grid>
+      </Grid>
           </div>
         )
       }else{

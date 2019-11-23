@@ -4,6 +4,8 @@ import Votes from '../votes/Votes'
 import { Card, Button, IconButton } from '@material-ui/core';
 import Axios from 'axios';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import {Link} from 'react-router-dom';
+
 
 
 //redux
@@ -124,11 +126,13 @@ const OneAnswer = (props)=>{
                     <div className="content">
                         <h2>{props.answer}</h2>
                         <p>{props.description}</p>
-                        <QuestionProfileDetails
-                            name={props.createrName}
-                            votes={props.createrVotes}
-                            profileLink={props.createrProfileLink}
-                        />
+                        <Link to={'/profile/'+props.createrId} className="link" >
+                            <QuestionProfileDetails
+                                name={props.createrName}
+                                votes={props.createrVotes}
+                                profileLink={props.createrProfileLink}
+                            />
+                        </Link>
                     </div>
                 </div>
             )

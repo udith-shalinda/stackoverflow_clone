@@ -141,6 +141,7 @@ const OneQuestion =(props)=>{
                                 answerVotes = {answer.answerVoters}
                                 createrName={answer.createrDetails.name}
                                 createrVotes ={answer.createrDetails.votes}
+                                createrId={answer.createrId}
                                 createrProfileLink={answer.createrDetails.profilePictureLink}
                                 upVoted={answer.upVoted}
                                 downVoted={answer.downVoted}
@@ -195,11 +196,12 @@ const OneQuestion =(props)=>{
                     <div className="content">
                         <h2>{OneQuestion.question}</h2>
                         <p>{OneQuestion.description}</p>
-                        <QuestionProfileDetails 
-                            name={OneQuestion.createrDetails.name} 
-                            votes={OneQuestion.createrDetails.votes} 
-                            profileLink={OneQuestion.createrDetails.profileLink}/>
-                        
+                        <Link to={'/profile/'+OneQuestion.createrId} className="link" >
+                            <QuestionProfileDetails 
+                                name={OneQuestion.createrDetails.name} 
+                                votes={OneQuestion.createrDetails.votes} 
+                                profileLink={OneQuestion.createrDetails.profileLink}/>
+                        </Link>
                         {editDeleteButtonHander()}
                         {indicateAddingAnswer()}
                         {showAnswers()}
