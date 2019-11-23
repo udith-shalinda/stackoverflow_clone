@@ -55,7 +55,7 @@ const Home =(props)=>{
             return questiondata.map((question,index)=>{
                 console.log(index);
                 return(
-                    <div>
+                    <div key={question.id}>
                         <QuestionPreview 
                             id={question.id}
                             question={question.question} 

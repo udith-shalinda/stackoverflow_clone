@@ -44,7 +44,7 @@ import Axios from 'axios';
         return(
           myQuestionList.map((question)=>{
             return(
-              <Card>
+              <Card key={question.id}>
                 <CardContent>{question.question}</CardContent>
               </Card>
             )

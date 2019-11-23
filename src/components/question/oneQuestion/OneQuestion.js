@@ -133,7 +133,7 @@ const OneQuestion =(props)=>{
             if(OneQuestion.answerList.length >0){
                 return OneQuestion.answerList.map((answer)=>{
                     return(
-                        <div>
+                        <div key={answer.id}>
                             <OneAnswer
                                 id={answer.id} 
                                 answer={answer.answer}
