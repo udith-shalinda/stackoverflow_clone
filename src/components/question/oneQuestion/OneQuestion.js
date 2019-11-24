@@ -104,6 +104,8 @@ const OneQuestion =(props)=>{
             if(res.data !== OneQuestion.voters){
                 stompClient.send("/app/question/votes/"+id, {});
                 stompClient.send("/app/question/home/"+id, {});
+                stompClient.send("/app/profile/votes/"+OneQuestion.createrId,{})
+
                 setsomeOneAddAnswer(null)
             }
         }catch(e){
@@ -121,7 +123,7 @@ const OneQuestion =(props)=>{
             if(res.data !== OneQuestion.voters){
                 stompClient.send("/app/question/votes/"+id, {});
                 stompClient.send("/app/question/home/"+id, {});
-
+                stompClient.send("/app/profile/votes/"+OneQuestion.createrId,{})
             }  
         }catch(e){
             console.log(e);

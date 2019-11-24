@@ -36,7 +36,7 @@ let stompClient=null;
   const subscribeProfile=()=>{
     stompClient.connect({}, function (frame) {
       console.log('Connected: ' + frame);
-      stompClient.subscribe('/topic/user/home', function (res) {
+      stompClient.subscribe('/topic/user/profile/'+id, function (res) {
           getProfileData();
           console.log(res.body);
       });

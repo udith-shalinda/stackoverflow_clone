@@ -34,7 +34,7 @@ const OneAnswer = (props)=>{
             if(res.data !== props.answerVotes){
                 props.stompClient.send("/app/question/votes/"+props.questionId, {});
                 props.stompClient.send("/app/question/home/"+props.questionId, {});
-
+                props.stompClient.send("/app/profile/votes/"+props.createrId,{})
             }  
         }catch(e){
             console.log(e);
@@ -56,6 +56,7 @@ const OneAnswer = (props)=>{
             if(res.data !== props.answerVotes){
                 props.stompClient.send("/app/question/votes/"+props.questionId, {});
                 props.stompClient.send("/app/question/home/"+props.questionId, {});
+                props.stompClient.send("/app/profile/votes/"+props.createrId,{})
             }  
         }catch(e){
             console.log(e);
