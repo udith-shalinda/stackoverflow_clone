@@ -1,14 +1,18 @@
 import axios from 'axios';
 
-export const getAllQuestions = () =>  async dispatch=>{
+export const getAllQuestions = (currentPage,pageSize) =>  async dispatch=>{
     try{
-        const allQuestions = await axios.get('http://localhost:8102/api/question/getAllQuestions');
+        const allQuestions = await axios.get('http://localhost:8102/api/question/getAllQuestions/'+currentPage+'/'+pageSize);
             console.log(allQuestions.data);
         dispatch({
             type:'GET_ALL_QUESTIONS',
-            questions:allQuestions.data 
+            questions:allQuestions.data.questionPreviewResponseList 
         })
-        return allQuestions.data;
+        dispatch({
+            type:'GET_TOTAL_PAGES',
+            pages:allQuestions.data.totalPages
+        })
+        return allQuestions.data.questionPreviewResponseList;
     }catch(err){
         return err.message;
     }

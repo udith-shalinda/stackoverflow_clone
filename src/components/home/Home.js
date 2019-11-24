@@ -14,8 +14,11 @@ let stompClient = null;
 
 const Home =(props)=>{
 
-    const [questiondata,setQuestionData] = useState([]);
-    const [currentPage,setCurrentPage] = useState(1);
+    const [questiondata,setQuestionData] = useState(null);
+    const [pageState,setPageState] = useState({
+        currentPage:0,
+        pageSize:1
+    });
 
     useEffect(()=>{
         getAllQuestions();
@@ -24,7 +27,7 @@ const Home =(props)=>{
 
     const getAllQuestions=async ()=>{
         if(props.allQuestions === null){
-            setQuestionData(await props.getAllQuestions());
+            setQuestionData(await props.getAllQuestions(pageState.currentPage,pageState.pageSize));
             console.log(questiondata);
         }else{
             setQuestionData(props.allQuestions);
@@ -47,13 +50,13 @@ const Home =(props)=>{
       });
     }
     const updateQuestion =  async()=>{
-        setQuestionData(await props.getAllQuestions());
+        setQuestionData(await props.getAllQuestions(pageState.currentPage,pageState.pageSize));
     }
     
 
     const questionPreview = ()=>{
-        if(questiondata!== null && questiondata.length>=1){
-            return questiondata.map((question)=>{
+        if(props.allQuestions!== null && props.allQuestions.length>=1){
+            return props.allQuestions.map((question)=>{
                 return(
                     <div key={question.id}>
                         <QuestionPreview 
@@ -68,14 +71,16 @@ const Home =(props)=>{
                             answerCount = {question.answerCount}
                         />
                     </div>
-                )
+                ) 
             })
+        }else{
+            return <div>loading .....</div>;
         }
     }
     const pagination = ()=>{
         if(questiondata!== null && questiondata.length>=1){
             return(
-                <Pagination currentPage={currentPage}></Pagination>
+                <Pagination currentPage={pageState.currentPage} ></Pagination>
             )
         }
     }
