@@ -12,6 +12,10 @@ export const getAllQuestions = (currentPage,pageSize) =>  async dispatch=>{
             type:'GET_TOTAL_PAGES',
             pages:allQuestions.data.totalPages
         })
+        dispatch({
+            type:'GET_CURRENT_PAGE',
+            currentPage:currentPage+1
+        })
         return allQuestions.data.questionPreviewResponseList;
     }catch(err){
         return err.message;

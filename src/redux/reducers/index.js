@@ -5,7 +5,7 @@ import colorState from './color/color'
 import userToken from './user/usertoken'
 import questionState from './questions/AllQuestions'
 import totalPages from './totalpages/TotalPages'
-
+import currentPage from './totalpages/CurrentPage'
 
 
 
@@ -15,5 +15,6 @@ export default combineReducers({
     profileDataState,
     colorState,
     questionState,
-    totalPages
+    totalPages,
+    currentPage
   })
