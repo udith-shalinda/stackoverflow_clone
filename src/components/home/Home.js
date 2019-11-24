@@ -44,7 +44,7 @@ const Home =(props)=>{
       stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/user/home', function (res) {
-            updateQuestion();
+            // updateQuestion();
             console.log(res.body);
         });
       });
@@ -56,11 +56,12 @@ const Home =(props)=>{
 
     const questionPreview = ()=>{
         if(props.allQuestions!== null && props.allQuestions.length>=1){
-            return props.allQuestions.map((question)=>{
+            return props.allQuestions.map((question,index)=>{
                 return(
                     <div key={question.id}>
                         <QuestionPreview 
                             id={question.id}
+                            index={index}
                             question={question.question} 
                             description={question.description} 
                             createrId={question.createrId}

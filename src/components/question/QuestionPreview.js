@@ -1,11 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card } from '@material-ui/core'
 import {Link} from 'react-router-dom';
 import QuestionProfileDetails from './QuestionProfileDetails';
+import { getStompClient } from '../websocket/StompClient';
 
 import './Question.css'
 
+//redux
+import { connect } from 'react-redux'
+import { getOneQuestionById } from '../../redux/actions/AllQuestions';
+
 const QuestionPreview =(props)=>{
+
+    useEffect(()=>{
+        subscribeProfile(); 
+    },[])
+
+    const subscribeProfile=()=>{
+        const stompClient = getStompClient();
+        stompClient.connect({}, function (frame) {
+          console.log('Connected: ' + frame);
+          stompClient.subscribe('/topic/user/question/'+props.id, function (res) {
+                props.getOneQuestionById(props.id,props.index)
+              console.log("question change detected");
+          });
+        });
+    }
+
+
     return(
         <div >
             <Card className="questionCard">
@@ -39,4 +61,10 @@ const QuestionPreview =(props)=>{
     );
 }
 
-export default QuestionPreview;
+// export default QuestionPreview;
+
+  
+  export default connect(
+    null,
+    { getOneQuestionById}
+  )(QuestionPreview)

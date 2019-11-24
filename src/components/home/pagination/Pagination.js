@@ -15,11 +15,10 @@ export const Pagination=(props)=>{
 
     useEffect(()=>{
         setPages(props.currentPage);
-    })
+    },[props.currentPage])
 
     const handlePagination=(page)=>{
         props.getAllQuestions(page-1,1)
-        setPages(page)
     }
     
     return(

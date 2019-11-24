@@ -22,3 +22,20 @@ export const getAllQuestions = (currentPage,pageSize) =>  async dispatch=>{
     }
     
 };
+
+
+export const getOneQuestionById = (id,index) =>  async dispatch=>{
+    try{
+        const oneQuestion = await axios.get('http://localhost:8102/api/question/getOneQuestionPreview/'+id);
+            console.log(oneQuestion.data);
+        dispatch({
+            type:'UPDATE_ONE_QUESTION',
+            payload:{
+                question:oneQuestion.data,
+                index:index
+            } 
+        })
+    }catch(err){
+        return err.message;
+    } 
+};

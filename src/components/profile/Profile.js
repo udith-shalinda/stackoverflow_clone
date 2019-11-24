@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { setUserId,setUserToken } from '../../redux/actions/UserLogin';
 import {changeTheamColor} from '../../redux/actions/color';
 import Axios from 'axios';
-import { getStompClient, subscribeProfile} from '../websocket/StompClient';
+import { getStompClient} from '../websocket/StompClient';
 
 let stompClient=null;
 
