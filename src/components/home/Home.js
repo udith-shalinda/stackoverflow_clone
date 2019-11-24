@@ -3,6 +3,7 @@ import QuestionPreview from '../question/QuestionPreview';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { Pagination } from 'semantic-ui-react'
+import ReactPaginate from 'react-paginate';
 
 //redux
 import { connect } from 'react-redux'
@@ -52,8 +53,7 @@ const Home =(props)=>{
 
     const questionPreview = ()=>{
         if(questiondata!== null && questiondata.length>=1){
-            return questiondata.map((question,index)=>{
-                console.log(index);
+            return questiondata.map((question)=>{
                 return(
                     <div key={question.id}>
                         <QuestionPreview 
@@ -72,7 +72,7 @@ const Home =(props)=>{
             })
         }
     }
-
+   
     return(
         <div>
             <br></br>
