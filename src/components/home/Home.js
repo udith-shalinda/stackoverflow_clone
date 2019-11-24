@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import QuestionPreview from '../question/QuestionPreview';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import { Pagination } from 'semantic-ui-react'
-import ReactPaginate from 'react-paginate';
+import Pagination from './pagination/Pagination'
 
 //redux
 import { connect } from 'react-redux'
@@ -16,6 +15,7 @@ let stompClient = null;
 const Home =(props)=>{
 
     const [questiondata,setQuestionData] = useState([]);
+    const [currentPage,setCurrentPage] = useState(1);
 
     useEffect(()=>{
         getAllQuestions();
@@ -72,21 +72,20 @@ const Home =(props)=>{
             })
         }
     }
+    const pagination = ()=>{
+        if(questiondata!== null && questiondata.length>=1){
+            return(
+                <Pagination currentPage={currentPage}></Pagination>
+            )
+        }
+    }
    
     return(
         <div>
             <br></br>
            {questionPreview()}
-           <div>
-            <Pagination
-                    defaultActivePage={1}
-                    firstItem={null}
-                    lastItem={null}
-                    pointing
-                    secondary
-                    totalPages={3}
-                />
-           </div>
+           <br></br>
+           {pagination()}
         </div>
     );
 }
