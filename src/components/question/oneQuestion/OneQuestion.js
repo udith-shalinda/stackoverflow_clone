@@ -15,6 +15,7 @@ import {Link} from 'react-router-dom';
 //redux
 import { connect } from 'react-redux'
 import { setUserId } from '../../../redux/actions/UserLogin';
+import { CommentPreview } from './comment/CommentPreview';
 
 
 
@@ -206,6 +207,7 @@ const OneQuestion =(props)=>{
                                 votes={OneQuestion.createrDetails.votes} 
                                 profileLink={OneQuestion.createrDetails.profileLink}/>
                         </Link>
+                        {showComments()}
                         {commentButtonHandler()}
                         {editDeleteButtonHander()}
                         {indicateAddingAnswer()}
@@ -285,7 +287,23 @@ const OneQuestion =(props)=>{
         setQuestionComment(false)
         stompClient.send("/app/question/votes/"+id, {});
     }
-
+    const showComments=()=>{
+        if(OneQuestion){
+            if(OneQuestion.comments !== null){
+                return OneQuestion.comments.map((comment)=>{
+                    return(
+                        <CommentPreview comment={comment.comment} userName={comment.userId}></CommentPreview>
+                    )
+                })
+            }else{
+                return(
+                    <p>No comments yet!!</p>
+                )
+            }
+        }else{
+            return null;
+        }
+    }
 
 
 
