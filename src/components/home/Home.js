@@ -10,19 +10,16 @@ import { setUserId } from '../../redux/actions/UserLogin';
 import {getAllQuestions} from '../../redux/actions/AllQuestions'
 
 
-let stompClient = null;
-
 const Home =(props)=>{
 
     const [questiondata,setQuestionData] = useState(null);
     const [pageState,setPageState] = useState({
         currentPage:0,
-        pageSize:1
+        pageSize:2
     });
 
     useEffect(()=>{
         getAllQuestions();
-        subscribeVotes();
     },[])
 
     const getAllQuestions=async ()=>{
@@ -33,24 +30,6 @@ const Home =(props)=>{
             setQuestionData(props.allQuestions);
             console.log(questiondata);
         }
-    }
-    
-    const subscribeVotes=()=>{
-        var sock = new SockJS('http://localhost:8102/api/ws');
-      stompClient = Stomp.over(sock);
-      sock.onopen = function() {
-          console.log('open');
-      }
-      stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/user/home', function (res) {
-            // updateQuestion();
-            console.log(res.body);
-        });
-      });
-    }
-    const updateQuestion =  async()=>{
-        setQuestionData(await props.getAllQuestions(pageState.currentPage,pageState.pageSize));
     }
     
 
@@ -81,7 +60,7 @@ const Home =(props)=>{
     const pagination = ()=>{
         if(questiondata!== null && questiondata.length>=1){
             return(
-                <Pagination currentPage={pageState.currentPage} ></Pagination>
+                <Pagination currentPage={pageState.currentPage} setPageState={setPageState}></Pagination>
             )
         }
     }

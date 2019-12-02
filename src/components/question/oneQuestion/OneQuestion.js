@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Button, CircularProgress } from '@material-ui/core';
+import { Card, Button, CircularProgress, TextField } from '@material-ui/core';
 import QuestionProfileDetails from '../QuestionProfileDetails';
 import Votes from '../votes/Votes'
 import OneAnswer from './OneAnswer';
@@ -26,6 +26,8 @@ const OneQuestion =(props)=>{
     const [addAnswerState,setAnswerState] = useState(false);
     const [OneQuestion,setOneQuestion] = useState(null);
     const [someOneAddingAnswer, setsomeOneAddAnswer] = useState(null);
+    const [questionComment,setQuestionComment] = useState(false);
+    const [inputComment,setInputComment]=useState('');
     let config = {
         headers: {
             "Authorization":"Bearer " + props.token,
@@ -204,6 +206,7 @@ const OneQuestion =(props)=>{
                                 votes={OneQuestion.createrDetails.votes} 
                                 profileLink={OneQuestion.createrDetails.profileLink}/>
                         </Link>
+                        {commentButtonHandler()}
                         {editDeleteButtonHander()}
                         {indicateAddingAnswer()}
                         {showAnswers()}
@@ -241,6 +244,29 @@ const OneQuestion =(props)=>{
             )
         }
     }
+    const commentButtonHandler=()=>{
+        if(questionComment){
+            return(
+                <div>
+                    <TextField
+                    id="outlined-email-input3"
+                    label="inputComment"
+                    type="text"
+                    name="inputComment"
+                    margin="normal"
+                    variant="outlined"
+                    className="textField"
+                    onChange={(event)=>setInputComment(event.target.value)}
+                    />
+                    <Button onClick={addCommentQuestion}>Add</Button>
+                </div>
+            )
+        }else{
+            return(
+                <Button onClick={()=>{setQuestionComment(true)}}>Add comment</Button>
+            )
+        }
+    }
     const deleteQuestionHandler = async()=>{
         let Question={
             answerIdList:OneQuestion.answerIdList,
@@ -248,6 +274,22 @@ const OneQuestion =(props)=>{
         const res = await Axios.post('http://localhost:8102/api/question/delete/'+id,Question,config);
         console.log(res.data);
     }
+
+    const addCommentQuestion=async()=>{
+        let commentClass={
+            comment:inputComment,
+            userId:props.userId,
+        }
+        const res = await Axios.post('http://localhost:8102/api/comment/addToQuestion/'+id,commentClass,config);
+        console.log(res.data);
+        setQuestionComment(false)
+        stompClient.send("/app/question/votes/"+id, {});
+    }
+
+
+
+
+
 
     return(
         <div>
